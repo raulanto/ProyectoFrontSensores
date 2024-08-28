@@ -1,5 +1,8 @@
 <template>
-  <div>
-    <h1 class="text-green-600 text-xl font-extrabold">dfsfds</h1>
+  <div class="">
+    <darkmode/>
   </div>
 </template>
+<script setup lang="ts">
+import Darkmode from "~/components/global/darkmode.vue";
+</script>
