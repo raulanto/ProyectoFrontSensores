@@ -1,9 +1,20 @@
 <script setup lang="ts">
+const isOpen = ref(false)
+
+
+definePageMeta({
+    layout: 'dasboradlyt',
+    middleware: [
+        'auth',
+    ],
+
+});
+
 
 </script>
 
 <template>
-<h1>Esto es una panel admin</h1>
+
 </template>
 
 <style scoped>

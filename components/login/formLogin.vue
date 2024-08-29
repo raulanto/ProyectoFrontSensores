@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { object, string, type InferType } from 'yup'
-import { useFetch } from '#imports'
+import { useFetch,useRouter } from '#imports'
+import { useAuthStore } from '~/stores/auth'
 import type { FormSubmitEvent } from '#ui/types'
-
+const authStore = useAuthStore()
+const router = useRouter()
 // Definir el esquema de validación con Yup
 const schema = object({
-    username: string().email('Invalid email').required('Required'),
+    username:  string()
+        .required('Required'),
     password: string()
-        .min(8, 'Must be at least 8 characters')
         .required('Required')
 })
 
@@ -24,47 +26,34 @@ const errors = reactive<Partial<Schema>>({})
 const apiError = ref<string | null>(null)
 
 // Función para manejar el envío del formulario
-async function onSubmit(event: Event) {
+async function onSubmit (event: FormSubmitEvent<Schema>) {
     event.preventDefault()
 
     try {
-        // Validar los datos del formulario
-        await schema.validate(state, { abortEarly: false })
-
-        // Limpiar errores previos
-        Object.keys(errors).forEach(key => (errors[key as keyof Schema] = undefined))
-
-        // Enviar los datos a la API
-        const { data, error } = await useFetch('http://127.0.0.1:8000/api-token-auth/', {
+        const { data, pending, error, refresh } = await useFetch('http://127.0.0.1:8000/api-token-auth/', {
             method: 'POST',
             body: {
-                email: state.username,
+                username: state.username,
                 password: state.password
             }
         })
 
-        if (error.value) {
-            // Manejar el error devuelto por la API
-            apiError.value = error.value.data.non_field_errors[0]
-        } else {
-            const { token, user_id, email, first_name } = data.value
-
-            // Guardar los datos en localStorage
-            localStorage.setItem('token', token)
-            localStorage.setItem('user_id', user_id)
-            localStorage.setItem('email', email)
-            localStorage.setItem('first_name', first_name)
-
-            // Redirigir o realizar otra acción
-            // router.push('/dashboard')
-        }
-    } catch (validationErrors) {
-        // Manejar errores de validación
-        if (validationErrors instanceof ValidationError) {
-            validationErrors.inner.forEach(error => {
-                errors[error.path as keyof Schema] = error.message
+        if (data.value && data.value.token) {
+            authStore.setToken(data.value.token)
+            authStore.setUser({
+                id: data.value.user_id,
+                email: data.value.email,
+                firstName: data.value.first_name
             })
+
+            // Redirigir a la página principal u otra página protegida
+            router.push('/panel/')
+        } else if (error.value) {
+            // Manejar el error, mostrar mensaje al usuario, etc.
+            console.error('Error:', error.value)
         }
+    } catch (error) {
+        console.error('Error en la solicitud de inicio de sesión:', error)
     }
 }
 </script>
@@ -92,16 +81,17 @@ async function onSubmit(event: Event) {
                 </h1>
                 <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
                     <UFormGroup label="Username" name="username">
-                        <UInput v-model="state.username" />
+                        <UInput v-model="state.username"     size="md"/>
                     </UFormGroup>
 
                     <UFormGroup label="Password" name="password">
-                        <UInput v-model="state.password" type="password" />
+                        <UInput v-model="state.password" type="password"     size="md"/>
                     </UFormGroup>
 
-                    <UButton type="submit">
-                        Submit
+                    <UButton type="submit" block>
+                        Entrar
                     </UButton>
+                    <p v-if="apiError">{{ apiError }}</p>
                 </UForm>
             </div>
 
