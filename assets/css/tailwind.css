@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
+
+@layer components{
+    .section-card {
+        @apply  bg-white h-full w-full     rounded-lg border-gray-100 shadow-md shadow-black/5 dark:border-gray-600 p-4 space-y-4 md:space-y-0 md:space-x-4;
+    }
+}
+
 @tailwind utilities;
