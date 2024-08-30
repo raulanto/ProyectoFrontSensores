@@ -22,13 +22,13 @@ const emit = defineEmits(['toggleSidebar']);
                 </div>
                 <NuxtLink to="/panel/" class="flex items-center justify-between mr-4" href="">
                     <img alt="Flowbite Logo" class="mr-3 h-8" src="~/assets/logo.svg"/>
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-                    >Dashboard</span
-                    >
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                        Dashboard
+                    </span>
                 </NuxtLink>
             </div>
-            <div class="flex items-center lg:order-2">
-
+            <div class="flex items-center lg:order-2 gap-2">
+                <darkmode/>
                 <Avatar/>
 
             </div>
