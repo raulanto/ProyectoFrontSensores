@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useEquipo } from '~/composables/useEquipo'
+import {ref, computed, onMounted, onBeforeMount} from 'vue'
+import {useEquipo} from '~/composables/useEquipo'
 
-const { fetchEquipos } = useEquipo()
+const {fetchEquipos} = useEquipo()
+
 
 const equipos = ref([])
-const page = ref(1)
-const rowsPerPage = ref(5)
+
 
 onMounted(async () => {
     try {
@@ -16,49 +16,95 @@ onMounted(async () => {
         console.error('Error al obtener los datos:', e.message)
     }
 })
+onBeforeMount(async () => {
+    try {
+        const data = await fetchEquipos()
+        equipos.value = data.results
+    } catch (e) {
+        console.error('Error al obtener los datos:', e.message)
+    }
+})
+
+const page = ref(1)
+const pageCount = 5
 
 const rows = computed(() => {
-    const start = (page.value - 1) * rowsPerPage.value
-    const end = start + rowsPerPage.value
-    return equipos.value.slice(start, end)
+    return equipos.value.slice((page.value - 1) * pageCount, (page.value) * pageCount)
 })
 
-const pageCount = computed(() => {
-    return Math.ceil(equipos.value.length / rowsPerPage.value)
-})
 
-function handleAction(row) {
-    console.log('Acción en:', row)
-    // Aquí puedes agregar la lógica que deseas ejecutar al hacer clic en el botón
-}
+definePageMeta({
+    layout: 'dasboradlyt',
+    middleware: [
+        'auth',
+    ],
+
+});
+
+const columns = [
+    {
+    key: 'id',
+    label: 'id'
+    },
+    {
+    key: 'nombre',
+    label: 'Nombre'
+    },
+    {
+    key: 'descripcion',
+    label: 'Descripcion'
+    },
+    {
+    key: 'fkplanta_nombre',
+    label: 'Planta'
+    },
+    {
+        key: 'fkproducto_nombre',
+        label: 'Producto'
+    },
+    {
+        key: 'actions'
+    }]
+const items = (row) => [
+    [{
+        label: 'Edit',
+        icon: 'i-heroicons-pencil-square-20-solid',
+        click: () => console.log('Edit', row.id)
+    }, {
+        label: 'Duplicate',
+        icon: 'i-heroicons-document-duplicate-20-solid'
+    }], [{
+        label: 'Archive',
+        icon: 'i-heroicons-archive-box-20-solid'
+    }, {
+        label: 'Move',
+        icon: 'i-heroicons-arrow-right-circle-20-solid'
+    }], [{
+        label: 'Delete',
+        icon: 'i-heroicons-trash-20-solid'
+    }]
+]
+console.log(equipos.value.length)
 </script>
 
 <template>
     <div class="section-card">
         <UTable
             :rows="rows"
-            :columns="[
-        { label: 'Nombre', key: 'nombre' },
-        { label: 'Descripción', key: 'descripcion' },
-        { label: 'Planta', key: 'fkplanta_nombre' },
-        { label: 'Producto', key: 'fkproducto_nombre' },
-        { label: 'Acciones', key: 'actions' }
-      ]"
+            :columns="columns"
         >
-            <template #row="{ row, column }">
-                <template v-if="column.key === 'actions'">
-                    <button @click="handleAction(row)" class="btn btn-primary">
-                        Acción
-                    </button>
-                </template>
-                <template v-else>
-                    {{ row[column.key] }}
-                </template>
+            <template #actions-data="{ row }">
+                <UDropdown :items="items(row)">
+                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+                </UDropdown>
             </template>
-        </UTable>
 
+        </UTable>
         <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
-            <UPagination v-model="page" :page-count="pageCount" />
+            <UPagination v-model="page" :page-count="pageCount" :total="equipos.length" />
         </div>
+
     </div>
+
+
 </template>
