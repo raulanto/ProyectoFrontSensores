@@ -1,10 +1,10 @@
-// middleware/auth.ts
+// middleware/auth.global.ts
 import { useAuthStore } from '~/stores/auth'
 
 export default defineNuxtRouteMiddleware((to, from) => {
     const authStore = useAuthStore()
 
-    if (!authStore.token) {
+    if (!authStore.isAuthenticated) {
         return navigateTo('/login')
     }
 })

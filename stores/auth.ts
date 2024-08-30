@@ -1,27 +1,46 @@
 // stores/auth.ts
 import { defineStore } from 'pinia'
 
-export const useAuthStore = defineStore('auth', {
-    state: () => ({
-        token: null as string | null,
-        user: {
-            id: null as number | null,
-            email: null as string | null,
-            firstName: null as string | null,
-        },
-    }),
-    actions: {
-        setToken(token: string) {
-            this.token = token
-        },
-        setUser(user: { id: number, email: string, firstName: string }) {
-            this.user.id = user.id
-            this.user.email = user.email
-            this.user.firstName = user.firstName
-        },
-        logout() {
-            this.token = null
-            this.user = { id: null, email: null, firstName: null }
-        }
-    },
+
+interface User {
+    id: number | null
+    email: string | null
+    firstName: string | null
+}
+
+export const useAuthStore = defineStore('auth', () => {
+    // Usamos useCookie para manejar el token
+    const tokenCookie = useCookie<string | null>('auth_token')
+    const userCookie = useCookie<User | null>('auth_user')
+
+    const token: Ref<string | null> = ref(tokenCookie.value || null)
+    const user: Ref<User | null> = ref(userCookie.value || null)
+
+    const isAuthenticated = computed(() => !!token.value)
+
+    function setToken(newToken: string) {
+        token.value = newToken
+        tokenCookie.value = newToken
+    }
+
+    function setUser(newUser: User) {
+        user.value = newUser
+        userCookie.value = newUser
+    }
+
+    function logout() {
+        token.value = null
+        user.value = null
+        tokenCookie.value = null
+        userCookie.value = null
+    }
+
+    return {
+        token,
+        user,
+        isAuthenticated,
+        setToken,
+        setUser,
+        logout,
+    }
 })
