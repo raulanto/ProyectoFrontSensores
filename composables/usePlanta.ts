@@ -1,13 +1,17 @@
-// composables/useEquipo.ts
+import { ref } from 'vue'
 import { useFetch } from '#app'
 import { useAuthStore } from '~/stores/auth'
 
-export function useEquipo() {
+export function usePlanta() {
     const authStore = useAuthStore()
-    // @ts-ignore
-    const iduser=authStore.user.id
-    async function fetchEquipos() {
-        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/equipo/?usuario=${iduser}`, {
+    const plantas = ref(null)
+    const error = ref(null)
+
+    const iduser = authStore.user?.id
+    const token = authStore.token
+
+    async function fetchPlantas() {
+        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/planta/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -21,6 +25,6 @@ export function useEquipo() {
     }
 
     return {
-        fetchEquipos,
+        fetchPlantas,
     }
 }

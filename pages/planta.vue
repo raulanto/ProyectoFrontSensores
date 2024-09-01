@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import {ref, computed, onMounted, onBeforeMount} from 'vue'
-import {useEquipo} from '~/composables/useEquipo'
+import {usePlanta} from '~/composables/usePlanta'
 
-const {fetchEquipos} = useEquipo()
+
+const {fetchPlantas} = usePlanta()
 
 
 const equipos = ref([])
@@ -10,7 +11,7 @@ const equipos = ref([])
 
 onMounted(async () => {
     try {
-        const data = await fetchEquipos()
+        const data = await fetchPlantas()
         equipos.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
@@ -18,7 +19,7 @@ onMounted(async () => {
 })
 onBeforeMount(async () => {
     try {
-        const data = await fetchEquipos()
+        const data = await fetchPlantas()
         equipos.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
@@ -43,24 +44,24 @@ definePageMeta({
 
 const columns = [
     {
-    key: 'id',
-    label: 'id'
+        key: 'id',
+        label: 'id'
     },
     {
-    key: 'nombre',
-    label: 'Nombre'
+        key: 'nombre',
+        label: 'Nombre'
     },
     {
-    key: 'descripcion',
-    label: 'Descripcion'
+        key: 'codigo_postal',
+        label: 'Codigo Postal'
     },
     {
-    key: 'fkplanta_nombre',
-    label: 'Planta'
+        key: 'calle',
+        label: 'Calle'
     },
     {
-        key: 'fkproducto_nombre',
-        label: 'Producto'
+        key: 'descripcion',
+        label: 'Descripcion'
     },
     {
         key: 'actions'
@@ -89,6 +90,7 @@ console.log(equipos.value.length)
 
 <template>
     <div class="section-card">
+
         <UTable
             :rows="rows"
             :columns="columns"
@@ -99,6 +101,11 @@ console.log(equipos.value.length)
                 </UDropdown>
             </template>
 
+            <section >
+                <div class="flex flex-col items-center justify-center py-6 gap-3">
+                    <UButton label="Add people" />
+                </div>
+            </section>
         </UTable>
         <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
             <UPagination v-model="page" :page-count="pageCount" :total="equipos.length" />

@@ -2,12 +2,12 @@
 import { useFetch } from '#app'
 import { useAuthStore } from '~/stores/auth'
 
-export function useEquipo() {
+export function useseccionEquipo() {
     const authStore = useAuthStore()
     // @ts-ignore
     const iduser=authStore.user.id
-    async function fetchEquipos() {
-        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/equipo/?usuario=${iduser}`, {
+    async function fetchseccionEquipo(fkequipo:number) {
+        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/seccionEquipo/?fkequipo=${fkequipo}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -21,6 +21,6 @@ export function useEquipo() {
     }
 
     return {
-        fetchEquipos,
+        fetchseccionEquipo,
     }
 }

@@ -47,7 +47,7 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
             })
 
             // Redirigir a la página principal u otra página protegida
-            navigateTo('/panel/')
+            navigateTo('/equipos')
         } else if (error.value) {
             // Manejar el error, mostrar mensaje al usuario, etc.
             console.error('Error:', error.value)

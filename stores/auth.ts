@@ -1,12 +1,7 @@
 // stores/auth.ts
 import { defineStore } from 'pinia'
+import type {User} from "~/types/User"
 
-
-interface User {
-    id: number | null
-    email: string | null
-    firstName: string | null
-}
 
 export const useAuthStore = defineStore('auth', () => {
     // Usamos useCookie para manejar el token

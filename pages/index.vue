@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // import {useLoginStore} from '@/stores/LoginStore';
-// import type DatosLecturaForm from '@/types/formUsuarioLogin';
+// import types DatosLecturaForm from '@/types/formUsuarioLogin';
 import Login from "~/components/login/formLogin.vue";
 
 definePageMeta({
