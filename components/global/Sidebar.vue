@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import {onMounted, onUnmounted, ref} from 'vue'
+import {ref} from 'vue'
+import {useRoute} from 'vue-router';
 
 const isSidebarVisible = ref(false)
-
-import {useRoute} from 'vue-router';
 
 
 const route = useRoute();
@@ -12,15 +11,25 @@ const route = useRoute();
 const links = [{
     label: 'Equipo',
     icon: 'i-heroicons-home',
-    to: `${route.path.startsWith('/equipos') ? '/equipos' : ''}/equipos`}, {
-    label: 'Planta',
-    icon: 'i-heroicons-chart-bar',
-    to: "/planta"
-}, {
-    label: 'Producto',
-    icon: 'i-heroicons-command-line',
-    to: '/producto'
-}]
+    to: `/equipos`
+},
+    {
+        label: 'Planta',
+        icon: 'i-heroicons-chart-bar',
+        to: "/planta"
+    }, {
+        label: 'Producto',
+        icon: 'i-heroicons-command-line',
+        to: '/producto'
+    }, {
+        label: 'Sensores',
+        icon: 'i-heroicons-command-line',
+        to: '/sensores'
+    }, {
+        label: 'Procesos',
+        icon: 'i-heroicons-command-line',
+        to: '/procesos'
+    }]
 
 const toggleSidebar = () => {
     isSidebarVisible.value = !isSidebarVisible.value

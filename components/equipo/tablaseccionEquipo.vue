@@ -96,6 +96,9 @@ const filteredRows = computed(() => {
             :columns="columns"
             :rows="rows"
         >
+            <template #caption>
+                <caption>Seccion Equipo</caption>
+            </template>
             <template  #actions-data="{ row }">
                     <tablaseccion-sensor :fkseccion-equipo="row.id" :seccion="row.nombre"/>
             </template>
@@ -110,6 +113,7 @@ const filteredRows = computed(() => {
         <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
             <UPagination v-model="page" :page-count="pageCount" :total="seccionEquipo.length"/>
         </div>
+
     </div>
 
 
