@@ -1,9 +1,7 @@
 export default defineNuxtConfig({
     // Error de apexcharts
-    build: {
-        transpile: ['vue3-apexcharts']
-    },
-    modules: ['@nuxt/ui','@pinia/nuxt',],
+
+    modules: ['@nuxt/ui', '@pinia/nuxt', '@formkit/auto-animate'],
     colorMode: {
         preference: 'light'
     },

@@ -1,16 +1,13 @@
-<!--
-An SVG graph
--->
 
 <script setup>
-import PolyGraph from '~/components/producto/form/PoliGrap.vue'
-import { ref, reactive } from 'vue'
+import {ref, reactive} from 'vue'
+import RadiarChart from "~/components/charts/radiarChart.vue";
 
 const newLabel = ref('')
 const stats = reactive([
-    { label: 'A', value: 100 },
-    { label: 'B', value: 100 },
-    { label: 'C', value: 100 },
+    {label: 'ph', value: 4},
+    {label: 'Temperatura', value: 4},
+    {label: 'Oxgeno Disuelto', value: 4},
 
 ])
 
@@ -31,45 +28,39 @@ function remove(stat) {
         alert("Can't delete more!")
     }
 }
+
 </script>
 
 <template>
-    <svg width="200" height="200">
-        <PolyGraph :stats="stats"></PolyGraph>
-    </svg>
 
-    <!-- controls -->
-    <div v-for="stat in stats">
-        <label>{{stat.label}}</label>
-        <input type="range" v-model="stat.value" min="0" max="100">
-        <span>{{stat.value}}</span>
-        <button @click="remove(stat)" class="remove">X</button>
+
+    <div class="grid grid-cols-3 grid-rows-5 gap-4">
+        <div>
+            <div v-for="stat in stats" >
+                <label>{{ stat.label }}</label>
+                <URange v-model="stat.value" min="0" max="100"/>
+                <span>{{ stat.value }}</span>
+                <UInput type="number" v-model="stat.value" />
+                <UButton @click="remove(stat)" class="remove">x</UButton>
+            </div>
+
+            <form id="add" class="flex gap-3">
+                <UInput name="newlabel" color="primary" variant="outline" placeholder="Agregar..." v-model="newLabel"/>
+                <UButton @click="add">Agregar</UButton>
+            </form>
+        </div>
+        <div class="col-span-2 row-span-2">
+            <radiar-chart/>
+        </div>
+        <div class="row-start-2">
+            <UInput type="file" size="sm" icon="i-heroicons-folder"/>
+        </div>
     </div>
 
-    <form id="add">
-        <input name="newlabel" v-model="newLabel">
-        <button @click="add">Add a Stat</button>
-    </form>
 
 </template>
 
-<style >
-
-circle {
-    fill: #d7d7d7;
-    stroke: #171717;
-}
-
-text {
-    font-size: 10px;
-    fill: #666;
-}
-
-label {
-    display: inline-block;
-    margin-left: 10px;
-    width: 20px;
-}
+<style>
 
 
 </style>

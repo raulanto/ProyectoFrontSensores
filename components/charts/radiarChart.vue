@@ -17,14 +17,11 @@ import { defineProps } from 'vue'
 // })
 
 let chartSeries =  [{
-        name: 'Series 1',
-        data: [80, 50, 30, 40, 100, 20],
+        name: 'Valores Maximos',
+        data: [80, 50, 30],
     }, {
-        name: 'Series 2',
-        data: [20, 30, 40, 80, 20, 80],
-    }, {
-        name: 'Series 3',
-        data: [44, 76, 78, 13, 43, 10],
+        name: 'Valores minimos',
+        data: [20, 30, 40],
     }]
 // let labelValor = props.name
 
@@ -70,9 +67,7 @@ chartOptions = {
                 top: 1
         }
     },
-    title: {
-        text: 'Radar Chart - Multi Series'
-    },
+
     stroke: {
         width: 2
     },
@@ -82,25 +77,26 @@ chartOptions = {
     markers: {
         size: 0
     },
-    yaxis: {
-        stepSize: 20
-    },
+
     xaxis: {
-        categories: ['2011', '2012', '2013', '2014', '2015', '2016']
+        categories: ['ph', 'Temperatura', 'Oxigeno disuelto']
     }
 }
 
 </script>
 
 <template>
-    <ClientOnly>
-        <VueApexCharts
-            type="area"
-            height="350px"
-            :options="chartOptions"
-            :series="chartSeries"
-        ></VueApexCharts>
-    </ClientOnly>
+    <div class="section-card">
+        <ClientOnly>
+            <VueApexCharts
+                type="radar"
+                height="350"
+                :options="chartOptions"
+                :series="chartSeries"
+            ></VueApexCharts>
+        </ClientOnly>
+    </div>
+
 
 </template>
 

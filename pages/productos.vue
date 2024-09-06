@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import {computed, onBeforeMount, onMounted, ref} from 'vue'
 import {useProductoStore} from '~/stores/producto'
-import ModalFormProdu from "~/components/producto/modalFormProdu.vue";
 
 const productoStore = useProductoStore()
 const {productos, error, fetchProducto, loading} = productoStore
@@ -42,7 +41,9 @@ definePageMeta({
 <template>
     <div class="section-card">
         <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-            <modal-form-produ/>
+            <NuxtLink to="/producto/crearProducto">
+                entrar
+            </NuxtLink>
         </div>
         <div>
             <UTable :columns="columns" :rows="rows">

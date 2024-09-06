@@ -20,7 +20,7 @@ const links = [{
     }, {
         label: 'Producto',
         icon: 'i-heroicons-command-line',
-        to: '/producto'
+        to: '/productos'
     }, {
         label: 'Sensores',
         icon: 'i-heroicons-command-line',
