@@ -52,7 +52,7 @@ const handleResize = () => {
     }
 }
 
-/*onMounted(() => {
+onMounted(() => {
     document.addEventListener('click', handleClickOutside)
     window.addEventListener('resize', handleResize)
 
@@ -62,7 +62,7 @@ onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside)
     window.removeEventListener('resize', handleResize)
 
-})*/
+})
 </script>
 
 <template>

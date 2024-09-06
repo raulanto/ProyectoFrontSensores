@@ -2,6 +2,7 @@
 
 
 import FormProducto from "~/components/producto/form/formProducto.vue";
+import RadiarChart from "~/components/charts/radiarChart.vue";
 
 const isOpen = ref(false)
 </script>
@@ -22,7 +23,8 @@ const isOpen = ref(false)
                     </div>
                 </template>
 
-                <form-producto/>
+<!--                <form-producto/>-->
+                <radiar-chart/>
             </UCard>
         </UModal>
     </div>

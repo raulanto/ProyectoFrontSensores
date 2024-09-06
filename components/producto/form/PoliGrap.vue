@@ -20,7 +20,7 @@ const points = computed(() => {
 
 <template>
     <g>
-        <polygon :points="points" class="colorbs"></polygon>
+        <polygon :points="points" style="fill: #004122;"></polygon>
         <circle cx="100" cy="100" r="80"></circle>
         <axis-label
             v-for="(stat, index) in stats"
@@ -37,7 +37,6 @@ const points = computed(() => {
 <style>
 .colorbs {
     fill: #004122;
-
 }
 
 </style>

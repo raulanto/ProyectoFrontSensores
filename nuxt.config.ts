@@ -1,4 +1,8 @@
 export default defineNuxtConfig({
+    // Error de apexcharts
+    build: {
+        transpile: ['vue3-apexcharts']
+    },
     modules: ['@nuxt/ui','@pinia/nuxt',],
     colorMode: {
         preference: 'light'
@@ -11,8 +15,14 @@ export default defineNuxtConfig({
             enabled: true
         }
     },
-
-
+    plugins: [
+        {src:  '~/plugins/vue-apexcharts.js', ssr: false},
+    ],
+    vite: {
+        ssr: {
+            noExternal: ['vue3-apexcharts']
+        }
+    },
 
 
 })
