@@ -1,7 +1,14 @@
+
+
+import Aura from '@primevue/themes/aura';
 export default defineNuxtConfig({
     // Error de apexcharts
 
-    modules: ['@nuxt/ui', '@pinia/nuxt', '@formkit/auto-animate'],
+    modules: [
+      '@nuxt/ui',
+      '@pinia/nuxt',
+      '@formkit/auto-animate',
+    ],
     colorMode: {
         preference: 'light'
     },
@@ -21,6 +28,7 @@ export default defineNuxtConfig({
             noExternal: ['vue3-apexcharts']
         }
     },
+
 
 
 })

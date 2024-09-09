@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script setup >
 import {ref, computed, onMounted, onBeforeMount} from 'vue'
-import {useSensores} from '~/composables/useSensores'
+import {useProceso} from '~/composables/useProceso'
 
 
-const {fetchSensor} = useSensores()
+const {fetchProceso} = useProceso()
 
 
 const sensores = ref([])
@@ -11,7 +11,7 @@ const sensores = ref([])
 
 onMounted(async () => {
     try {
-        const data = await fetchSensor()
+        const data = await fetchProceso()
         sensores.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
@@ -19,7 +19,7 @@ onMounted(async () => {
 })
 onBeforeMount(async () => {
     try {
-        const data = await fetchSensor()
+        const data = await fetchProceso()
         sensores.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
@@ -52,10 +52,14 @@ const columns = [
         label: 'Nombre'
     },
     {
-        key: 'matricula',
-        label: 'Matricula'
+        key: 'descripcion',
+        label: 'Descripcion'
     },
-]
+    {
+        key: 'actions'
+    }
+
+];
 const items = (row) => [
     [{
         label: 'Edit',
@@ -75,7 +79,6 @@ const items = (row) => [
         icon: 'i-heroicons-trash-20-solid'
     }]
 ]
-
 </script>
 
 <template>
@@ -86,10 +89,11 @@ const items = (row) => [
             :columns="columns"
         >
             <template #actions-data="{ row }">
-                <UDropdown :items="items(row)">
-                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-                </UDropdown>
+                <NuxtLink :to="{name:'proceso-id',params:{id:row.id}}">
+                    <UButton label="Entrar"/>
+                </NuxtLink>
             </template>
+
 
             <section >
                 <div class="flex flex-col items-center justify-center py-6 gap-3">

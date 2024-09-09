@@ -1,8 +1,12 @@
 <template>
   <div class="">
-      <NuxtLayout>
-          <NuxtPage  />
-      </NuxtLayout>
+
+          <NuxtLayout>
+              <NuxtPage  />
+          </NuxtLayout>
+
+
+      <UNotifications />
   </div>
 </template>
 <script setup lang="ts">

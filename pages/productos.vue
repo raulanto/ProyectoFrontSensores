@@ -41,8 +41,9 @@ definePageMeta({
 <template>
     <div class="section-card">
         <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
+
             <NuxtLink to="/producto/crearProducto">
-                entrar
+                <UButton>Crear un producto</UButton>
             </NuxtLink>
         </div>
         <div>

@@ -1,73 +1,47 @@
 <script setup lang="ts">
 import VueApexCharts from 'vue3-apexcharts'
-import { defineProps } from 'vue'
+import { defineProps, computed, watch } from 'vue'
 
-// const props = defineProps({
-//     series: {
-//         type: Array,
-//         required: true
-//     },
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     fecha: {
-//         type: Array
-//     }
-// })
+const props = defineProps({
+    valorMax: {
+        type: Array as () => number[], // Especificar tipo para TypeScript
+        required: true
+    },
+    valorMin: {
+        type: Array as () => number[],
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    categoria: {
+        type: Array as () => string[], // Especificar tipo para TypeScript
+        required: true
+    }
+})
 
-let chartSeries =  [{
-        name: 'Valores Maximos',
-        data: [80, 50, 30],
-    }, {
-        name: 'Valores minimos',
-        data: [20, 30, 40],
-    }]
-// let labelValor = props.name
+// Crear propiedades computadas reactivas para las series del gráfico
+const chartSeries = computed(() => [{
+    name: 'Valores Maximos',
+    data: props.valorMax,
+}, {
+    name: 'Valores Minimos',
+    data: props.valorMin,
+}]);
 
-// const datanueva = [
-//     {
-//         name: labelValor,
-//         data: chartSeries
-//     }
-// ]
-
-// function findMaxMin(array) {
-//     if (!Array.isArray(array) || array.length === 0) {
-//         throw new Error('El arreglo no debe estar vacío.')
-//     }
-//     let max = array[0]
-//     let min = array[0]
-//     for (let i = 1; i < array.length; i++) {
-//         if (array[i] > max) {
-//             max = array[i]
-//         }
-//         if (array[i] < min) {
-//             min = array[i]
-//         }
-//     }
-//     return { max, min }
-// }
-//
-// const result = findMaxMin(props.series)
-// const maximo = parseFloat(result.max)
-// const minimo = parseFloat(result.min)
-
-
-
-let chartOptions: ApexCharts.ApexOptions
-chartOptions = {
+// Crear una propiedad computada reactiva para las opciones del gráfico
+const chartOptions = computed((): ApexCharts.ApexOptions => ({
     chart: {
         height: 350,
-            type: 'radar',
-            dropShadow: {
+        type: 'radar',
+        dropShadow: {
             enabled: true,
-                blur: 1,
-                left: 1,
-                top: 1
+            blur: 1,
+            left: 1,
+            top: 1
         }
     },
-
     stroke: {
         width: 2
     },
@@ -77,29 +51,25 @@ chartOptions = {
     markers: {
         size: 0
     },
-
     xaxis: {
-        categories: ['ph', 'Temperatura', 'Oxigeno disuelto']
+        categories: props.categoria
     }
-}
+}));
+
+// Usar watch para realizar alguna acción adicional si es necesario
+watch(() => props, (newProps) => {
+    // Puedes agregar lógica aquí si necesitas realizar alguna acción cuando las props cambien
+}, { deep: true });
 
 </script>
 
 <template>
-    <div class="section-card">
-        <ClientOnly>
-            <VueApexCharts
-                type="radar"
-                height="350"
-                :options="chartOptions"
-                :series="chartSeries"
-            ></VueApexCharts>
-        </ClientOnly>
-    </div>
-
+    <ClientOnly>
+        <VueApexCharts
+            type="radar"
+            :options="chartOptions"
+            :series="chartSeries"
+        />
+    </ClientOnly>
 
 </template>
-
-<style scoped>
-
-</style>
