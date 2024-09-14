@@ -1,5 +1,30 @@
 import { useFetch } from '#app'
 import { useAuthStore } from '~/stores/auth'
+import { format } from "@formkit/tempo"
+
+interface FkProceso {
+    fkequipo: number;
+}
+
+interface Etapa {
+    id: number;
+    nombre: string;
+    activo: boolean;
+    fkProceso: FkProceso;
+    duracion: string;
+    created_at:string,
+    createdTime_at:string,
+    updated_at:string
+}
+
+interface ApiResponse {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: Etapa[];
+}
+
+
 
 export function useEtapa() {
     const authStore = useAuthStore()
@@ -14,7 +39,10 @@ export function useEtapa() {
         }
         return data.value
     }
-    async function fetchEtapaid(id: number) {
+    async function fetchEtapaid(id: number): Promise<{
+        fkProceso: FkProceso;
+        etapaPrincipal: { duracion: string; id: number; nombre: string; activo: boolean }
+    }> {
         const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/etapa/?id=${id}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`,
@@ -25,16 +53,32 @@ export function useEtapa() {
             throw new Error('Error al consumir la API');
         }
 
-        // Extracting the 'fkequipo' from the first result in the response
-        const result = data.value?.results.[0].fkProceso.fkequipo;
+        // @ts-ignore
+        const result: ApiResponse = data.value;
 
-        if (!result) {
-            throw new Error('No fkequipo found in the response');
+        if (!result || result.results.length === 0) {
+            throw new Error('No data found in the response');
         }
 
-        return result;
-    }
+        const etapa = result.results[0];
 
+        const etapaPrincipal = {
+            id: etapa.id,
+            nombre: etapa.nombre,
+            activo: etapa.activo,
+            duracion: etapa.duracion,
+            created_at:etapa.created_at,
+            createdTime_at:etapa.createdTime_at,
+            updated_at:etapa.updated_at
+        };
+
+        const fkProceso = etapa.fkProceso;
+
+        console.log('Objeto Principal:', etapaPrincipal);
+        console.log('Objeto fkProceso:', fkProceso);
+
+        return { etapaPrincipal, fkProceso };
+    }
 
     return {
         fetchEtapa,

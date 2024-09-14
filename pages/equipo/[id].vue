@@ -34,7 +34,10 @@ const links = [ {
     <div>
         <UBreadcrumb :links="links" class="section-card"/>
 
-        <tablaseccion-equipo :fkequipo="id"/>
+        <div class="section-card">
+
+            <tablaseccion-equipo :fkequipo="id"/>
+        </div>
     </div>
 </template>
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, onBeforeMount, onMounted, ref} from 'vue'
+import {computed, onBeforeMount, onMounted, ref,watch} from 'vue'
 import {useseccionSensor} from '~/composables/useseccionSensor'
 import FormEquipo from "~/components/equipo/formEquipo.vue";
 
@@ -51,6 +51,7 @@ definePageMeta({
 
 });
 
+
 const columns = [
     {
         key: 'id',
@@ -77,8 +78,8 @@ const isOpen = ref(false)
     <div>
         <UButton label="Sensores" @click="isOpen = true" color="white" variant="solid" />
 
-        <UModal v-model="isOpen" prevent-close>
-            <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800', base: 'h-full flex flex-col', }">
+        <UModal v-model="isOpen" prevent-close  >
+            <UCard >
                 <template #header>
                     <div class="flex items-center justify-between">
                         <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
@@ -95,7 +96,9 @@ const isOpen = ref(false)
                 <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
                     <UPagination v-model="page" :page-count="pageCount" :total="seccionEquipoSensor.length"/>
                 </div>
+
             </UCard>
+
         </UModal>
     </div>
 </template>
