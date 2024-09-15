@@ -17,7 +17,7 @@ useHead({
         { key: 'theme-color', name: 'theme-color' }
     ],
     link: [
-        { rel: 'icon', href: '/logo.png' }
+        { rel: 'icon', href: 'assets/logo.svg' }
     ],
     htmlAttrs: {
         lang: 'en'

@@ -12,7 +12,7 @@
 
 @layer components{
     .section-card {
-        @apply  rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 my-1 p-3;
+        @apply  rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 my-1 p-3 ;
     }
 }
 

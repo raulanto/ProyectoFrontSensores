@@ -5,6 +5,8 @@ import { useProceso } from '~/composables/useProceso';
 import { useEtapa } from '~/composables/useEtapa';
 import TablaseccionEquipo from '~/components/equipo/tablaseccionEquipo.vue';
 import TablaLectura from "~/components/etapa/tablaLectura.vue";
+import Circular from "~/components/charts/Circular.vue";
+import ViewArea from "~/components/charts/viewArea.vue";
 
 
 const route = useRoute();
@@ -186,11 +188,32 @@ const tasbItems = [{
                 <tablaseccion-equipo :fkequipo="etapa.fkequipo" />
             </div>
             <div v-else-if="item.key === 'grafico'" class="space-y-3">
-                graficos
+                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                    <div ><circular :etapa="id" :fk="13" :name="'pH'"/></div>
+                    <div ><circular :etapa="id" :fk="8" :name="'Oxigeno Disuelto'"/></div>
+                </div>
+
+                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                    <div class="col-span-2">
+                        <view-area :etapa="id"  :name="'Oxiegeno disuelto'" :fk="8" :y="5.0" :y2="7.0" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                    <div class="col-span-2">
+                        <view-area :etapa="id"   :name="'pH'" :fk="13" :y="7.0" :y2="8.0" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                    <div class="col-span-2">
+                        <view-area :etapa="id"   :name="'Temperatura tanque'" :fk="9"  />
+                    </div>
+                </div>
+
             </div>
             <div v-else-if="item.key === 'lecturas'" class="space-y-3">
                 <tabla-lectura :etapa="id"></tabla-lectura>
             </div>
+
         </template>
 
 

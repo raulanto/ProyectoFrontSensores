@@ -72,13 +72,29 @@ const columns = [
 ]
 
 const router = useRouter()
+
+
+const todoStatus = [{
+    key: 'uncompleted',
+    label: 'In Progress',
+    value: false
+}, {
+    key: 'completed',
+    label: 'Completed',
+    value: true
+}]
+
+
 </script>
 
 <template>
     <div class="">
         <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
             <UInput v-model="q" placeholder="Filtrar Equipo" />
+
+
         </div>
+
 
         <UTable :columns="columns" :rows="filteredRows">
             <template #caption>
