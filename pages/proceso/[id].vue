@@ -4,16 +4,19 @@ import {ref, computed, onMounted, onBeforeMount} from 'vue'
 import {useProceso} from '~/composables/useProceso'
 import ModalformEtapa from "~/components/etapa/modalformEtapa.vue";
 import TableEtapa from "~/components/etapa/tableEtapa.vue";
+const route = useRoute();
 
+const id = ref(route.params.id);
 
-const {fetchProceso} = useProceso()
+console.log('ID:', id);
+const {fetchProcesoId} = useProceso()
 
 const proceso = ref([])
 
 
 onMounted(async () => {
     try {
-        const data = await fetchProceso()
+        const data = await fetchProcesoId(id.value)
         proceso.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
@@ -21,14 +24,13 @@ onMounted(async () => {
 })
 onBeforeMount(async () => {
     try {
-        const data = await fetchProceso()
+        const data = await fetchProcesoId(id.value)
         proceso.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
     }
 })
 
-const route = useRoute();
 
 const page = ref(1)
 const pageCount = 5
@@ -37,9 +39,7 @@ const rows = computed(() => {
     return proceso.value.slice((page.value - 1) * pageCount, (page.value) * pageCount)
 })
 
-const id = ref(route.params.id);
 
-console.log('ID:', id);
 
 
 definePageMeta({
@@ -78,7 +78,7 @@ const links = [ {
 
     <div class="grid grid-cols-5 grid-rows-1 gap-4">
         <div class="col-span-4 section-card">Etapas del proceso</div>
-        <div class="col-start-5 section-card">            <modalform-etapa/></div>
+        <div class="col-start-5 section-card">            <modalform-etapa :prceso-id="id"/></div>
     </div>
 
     <div class="grid grid-cols-5 grid-rows-2 gap-4">

@@ -1,18 +1,19 @@
 <script setup >
 import {ref, computed, onMounted, onBeforeMount} from 'vue'
 import {useProceso} from '~/composables/useProceso'
+import ModalFormProceso from "~/components/proceso/modalFormProceso.vue";
 
 
 const {fetchProceso} = useProceso()
 
 
-const sensores = ref([])
+const procesos = ref([])
 
 
 onMounted(async () => {
     try {
         const data = await fetchProceso()
-        sensores.value = data.results
+        procesos.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
     }
@@ -20,7 +21,7 @@ onMounted(async () => {
 onBeforeMount(async () => {
     try {
         const data = await fetchProceso()
-        sensores.value = data.results
+        procesos.value = data.results
     } catch (e) {
         console.error('Error al obtener los datos:', e.message)
     }
@@ -30,7 +31,7 @@ const page = ref(1)
 const pageCount = 5
 
 const rows = computed(() => {
-    return sensores.value.slice((page.value - 1) * pageCount, (page.value) * pageCount)
+    return procesos.value.slice((page.value - 1) * pageCount, (page.value) * pageCount)
 })
 
 
@@ -79,11 +80,31 @@ const items = (row) => [
         icon: 'i-heroicons-trash-20-solid'
     }]
 ]
+
+const links = [ {
+    label: 'Proceso',
+    icon: 'i-heroicons-square-3-stack-3d',
+
+}]
+
+async function recargardatos(){
+    try {
+        const data = await fetchProceso();  // No destructures 'data' unless it's part of the API response
+        procesos.value = data.results;  // Asigna el array de resultados
+    } catch (error) {
+        console.error('Error al actualizar el estado:', error.message);
+    }
+}
+
+
 </script>
 
 <template>
-    <div class="section-card">
 
+    <UBreadcrumb :links="links" class="section-card"/>
+
+    <div class="section-card">
+        <modal-form-proceso @recargardatos="recargardatos"/>
         <UTable
             :rows="rows"
             :columns="columns"
@@ -102,7 +123,7 @@ const items = (row) => [
             </section>
         </UTable>
         <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
-            <UPagination v-model="page" :page-count="pageCount" :total="sensores.length" />
+            <UPagination v-model="page" :page-count="pageCount" :total="procesos.length" />
         </div>
 
     </div>

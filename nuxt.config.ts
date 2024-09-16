@@ -1,9 +1,5 @@
 
-
-import Aura from '@primevue/themes/aura';
 export default defineNuxtConfig({
-    // Error de apexcharts
-
     modules: [
       '@nuxt/ui',
       '@pinia/nuxt',

@@ -36,9 +36,17 @@ definePageMeta({
         'auth',
     ],
 });
+
+const links = [ {
+    label: 'Productos',
+    icon: 'i-heroicons-square-3-stack-3d',
+
+}]
 </script>
 
 <template>
+    <UBreadcrumb :links="links" class="section-card"/>
+
     <div class="section-card">
         <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
 

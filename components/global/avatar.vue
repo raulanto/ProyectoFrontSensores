@@ -29,7 +29,7 @@ const items = [
         icon: 'i-heroicons-signal'
     }],*/
     [{
-        label: 'Cerrar Seccion',
+        label: 'Abandonar',
         icon: 'i-heroicons-arrow-left-on-rectangle',
         click: () => logout()
     }]

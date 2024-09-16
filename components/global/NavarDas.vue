@@ -3,6 +3,7 @@
 import Line from "~/components/icons/Line.vue";
 
 const emit = defineEmits(['toggleSidebar']);
+const isOpen = ref(false)
 </script>
 
 <template>
@@ -20,15 +21,52 @@ const emit = defineEmits(['toggleSidebar']);
                         <Line></Line>
                     </button>
                 </div>
-                <NuxtLink to="/" class="flex items-center justify-between mr-4" href="">
+                <NuxtLink class="flex items-center justify-between mr-4" href="" to="/">
                     <img alt="Flowbite Logo" class="mr-3 h-8" src="~/assets/logo.svg"/>
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                         Dashboard
                     </span>
                 </NuxtLink>
             </div>
-            <div class="flex items-center lg:order-2 gap-2">
-                <darkmode/>
+            <div class="flex items-center lg:order-2 gap-2 mx-8">
+                <div>
+                    <UButton label="Notificaciones" @click="isOpen = true"/>
+
+                    <USlideover v-model="isOpen" prevent-close>
+                        <UCard
+                            :ui="{ body: { base: 'flex-1' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }"
+                            class="flex flex-col flex-1">
+                            <template #header>
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                                        Notificaciones
+                                    </h3>
+                                    <UButton class="-my-1" color="gray" icon="i-heroicons-x-mark-20-solid"
+                                             variant="ghost" @click="isOpen = false"/>
+                                </div>
+                            </template>
+                            <UAlert
+                                :avatar="{
+                                  src: 'https://avatars.githubusercontent.com/u/739984?v=4',
+                                  alt: 'Avatar',
+
+                                }"
+                                :close-button="{ icon: 'i-heroicons-x-mark-20-solid', color: 'gray', variant: 'link', padded: false }"
+                                description="Insert custom content into the avatar slot!"
+                                title="Customize Alert Avatar"
+                            >
+                                <template #avatar="{ avatar }">
+                                    <UAvatar
+                                        chip-color="primary"
+                                        chip-position="top-right"
+                                        chip-text=""
+                                        v-bind="avatar"
+                                    />
+                                </template>
+                            </UAlert>
+                        </UCard>
+                    </USlideover>
+                </div>
                 <Avatar/>
 
             </div>

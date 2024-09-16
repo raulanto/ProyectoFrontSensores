@@ -11,6 +11,26 @@ const props=defineProps({
 const {fetchEtapa} = useEtapa()
 
 
+function getLabel(value) {
+    const labels = {
+        1: 'Activo',
+        2: 'Desactivado',
+        3: 'Terminado',
+        4: 'Error'
+    };
+    return labels[value] || 'Desconocido';
+}
+function getColor(value) {
+    const colors = {
+        1: 'emerald',
+        2: 'orange',
+        3: 'red',
+        4: 'gray'
+    };
+    return colors[value] || 'gray';
+}
+
+
 const etapa = ref([])
 
 
@@ -60,25 +80,7 @@ const columns = [
     }
 
 ];
-const items = (row) => [
-    [{
-        label: 'Edit',
-        icon: 'i-heroicons-pencil-square-20-solid',
-        click: () => console.log('Edit', row.id)
-    }, {
-        label: 'Duplicate',
-        icon: 'i-heroicons-document-duplicate-20-solid'
-    }], [{
-        label: 'Archive',
-        icon: 'i-heroicons-archive-box-20-solid'
-    }, {
-        label: 'Move',
-        icon: 'i-heroicons-arrow-right-circle-20-solid'
-    }], [{
-        label: 'Delete',
-        icon: 'i-heroicons-trash-20-solid'
-    }]
-]
+
 </script>
 
 <template>
@@ -86,11 +88,22 @@ const items = (row) => [
         :rows="rows"
         :columns="columns"
     >
+
+        <template  #activo-data="{ row }">
+            <UBadge
+                size="xs"
+                :label="getLabel(row.activo)"
+                :color="getColor(row.activo)"
+                variant="subtle"
+            />
+        </template>
+
         <template #actions-data="{ row }">
-            <NuxtLink :to="{name:'estado-id',params:{id:row.id}}">
+            <NuxtLink :to="{name:'estado-id',params:{id:row.id,proceso:props.id}}">
                 <UButton label="Entrar"/>
             </NuxtLink>
         </template>
+
 
     </UTable>
     <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
