@@ -57,26 +57,48 @@ onBeforeMount(async () => {
 });
 
 // Función para calcular el progreso
-const startProgress = ({ created_at, createdTime_at, duracion, updated_at }) => {
+// Función para calcular el progreso
+const startProgress = ({ created_at, createdTime_at, duracion, updated_at, activo }) => {
     const totalDurationMs = convertDurationToMs(duracion);
     const createdDateTime = new Date(`${created_at}T${createdTime_at}`);
     const updatedDateTime = new Date(updated_at);
 
+    // Calcular el tiempo transcurrido
     const elapsedTime = updated_at ? (updatedDateTime - createdDateTime) : 0;
     remainingTime.value = totalDurationMs - elapsedTime;
 
-    if (remainingTime.value > 0) {
+    // Si el estado es 'Terminado', mostrar 100% de progreso
+    if (activo === 3) {
+        progressValue.value = 100;
+        return;  // No hacer nada más si ya está terminado
+    }
+
+    // Si el estado es 'Desactivado', mostrar el progreso hasta donde se quedó
+    if (activo === 2) {
+        progressValue.value = Math.min(((totalDurationMs - remainingTime.value) / totalDurationMs) * 100, 100);
+        return;  // No avanzar el progreso si está desactivado
+    }
+
+    // Si el estado es 'Activo', iniciar el progreso
+    if (activo === 1 && remainingTime.value > 0) {
         intervalId.value = setInterval(() => {
             remainingTime.value -= 1000;
             progressValue.value = Math.min(((totalDurationMs - remainingTime.value) / totalDurationMs) * 100, 100);
 
             if (remainingTime.value <= 0) {
                 clearInterval(intervalId.value);
+                progressValue.value = 100;  // Establecer al 100% si el tiempo ha terminado
                 markAsFinished();  // Marcar como terminado cuando el progreso sea del 100%
             }
         }, 1000);
     }
 };
+
+// Observa el cambio en "activo" para pausar o reanudar el progreso
+watch(() => etapaPrincipaldata.value.activo, (newValue) => {
+    clearInterval(intervalId.value);  // Detener cualquier intervalo activo
+    startProgress(etapaPrincipaldata.value);  // Reiniciar el cálculo del progreso basado en el nuevo estado
+});
 
 // Función para marcar la etapa como terminada
 const markAsFinished = async () => {
@@ -195,7 +217,26 @@ function getColor(value) {
                 <tablaseccion-equipo :fkequipo="etapa.fkequipo" />
             </div>
             <div v-else-if="item.key === 'grafico'" class="space-y-3">
-                <!-- Contenido de las gráficas -->
+                                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                                    <div ><circular :etapa="id" :fk="13" :name="'pH'"/></div>
+                                    <div ><circular :etapa="id" :fk="8" :name="'Oxigeno Disuelto'"/></div>
+                                </div>
+
+                                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                                    <div class="col-span-2">
+                                        <view-area :etapa="id"  :name="'Oxiegeno disuelto'" :fk="8" :y="5.0" :y2="7.0" />
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                                    <div class="col-span-2">
+                                        <view-area :etapa="id"   :name="'pH'" :fk="13" :y="7.0" :y2="8.0" />
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 grid-rows-1 gap-4">
+                                    <div class="col-span-2">
+                                        <view-area :etapa="id"   :name="'Temperatura tanque'" :fk="9"  />
+                                    </div>
+                                </div>
             </div>
             <div v-else-if="item.key === 'lecturas'" class="space-y-3">
                 <tabla-lectura :etapa="id"></tabla-lectura>

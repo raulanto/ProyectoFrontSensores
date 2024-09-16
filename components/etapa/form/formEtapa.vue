@@ -79,6 +79,7 @@ const duracionLista=[
     {name:"3 días: 72 horas",value:'72:00:00'},
     {name:"1 semana (7 días)",value:'168:00:00'},
     {name:"30 minutos",value:'00:30:00'},
+    {name:"30 ",value:'00:00:30'},
 ]
 watch(() => props.isOpen, (newValue) => {
     if (!newValue) {
