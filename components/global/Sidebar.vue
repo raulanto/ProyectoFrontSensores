@@ -29,7 +29,12 @@ const links = [{
         label: 'Procesos',
         icon: 'i-heroicons-command-line',
         to: '/procesos'
-    }]
+    }, {
+        label: 'Notificaciones',
+        icon: 'i-heroicons-command-line',
+        to: '/notificaciones'
+    }
+    ]
 
 const toggleSidebar = () => {
     isSidebarVisible.value = !isSidebarVisible.value
