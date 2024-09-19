@@ -17,8 +17,32 @@ export function useNotificaciones(){
         if (error.value) {
             throw new Error('Error al consumir la API')
         }
+        return data.value
+    }
+
+    async function postNotificacion(
+        notificacion:{
+            user:number;
+            message:string;
+            tittle:string;
+
+        }
+    ){
+        const { data, error } = await useFetch('http://127.0.0.1:8000/api/v1/notificacion/registro/', {
+            method: 'POST',
+            headers: {
+                Authorization: `Token ${authStore.token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notificacion)
+        })
+
+        if (error.value) {
+            throw new Error('Error al crear el proceso')
+        }
 
         return data.value
+
     }
 
     return{

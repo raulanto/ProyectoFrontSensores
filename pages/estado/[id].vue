@@ -176,7 +176,8 @@ function getColor(value) {
                 <div>Nombre de la etapa: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.nombre }}</span></div>
                 <div>
                     <UBadge
-                        size="xs"
+                        class="px-2"
+                        size="xl"
                         :label="getLabel(etapaPrincipaldata.activo)"
                         :color="getColor(etapaPrincipaldata.activo)"
                         variant="subtle"
@@ -197,17 +198,24 @@ function getColor(value) {
         </div>
 
         <div class="col-start-5 section-card flex">
-
-            <UButton @click="toggleActiveState" color="white" variant="solid" block>
-                {{ etapaPrincipaldata.activo === 1 ? 'Desactivar' : 'Activar' }}
+            <UButton
+                @click="toggleActiveState"
+                :color="etapaPrincipaldata.activo === 1 ? 'rose' : 'green'"
+                variant="solid"
+                block
+                :disabled="etapaPrincipaldata.activo === 3"
+            >
+            {{ etapaPrincipaldata.activo === 1 ? 'Desactivar' : 'Activar' }}
             </UButton>
         </div>
+
+
     </div>
 
     <div class="grid grid-cols-5 grid-rows-1 gap-4">
         <div class="col-span-5 section-card">
             <!-- Barra de progreso -->
-            <UProgress :value="progressValue" indicator />
+            <UProgress :value="progressValue" indicator  />
         </div>
     </div>
 

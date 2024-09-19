@@ -21,7 +21,7 @@ const isOpen = ref(false)
                         <Line></Line>
                     </button>
                 </div>
-                <NuxtLink class="flex items-center justify-between mr-4" href="" to="/">
+                <NuxtLink class="flex items-center justify-between mr-4" href="" >
                     <img alt="Flowbite Logo" class="mr-3 h-8" src="~/assets/logo.svg"/>
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                         Dashboard
