@@ -1,32 +1,72 @@
-<script setup lang="ts">
-import {useNotificaciones} from "~/composables/useNotificaciones";
-const {fetchNotificacion}=useNotificaciones()
-const notificacion =ref([])
+<script setup>
+import { useNotificaciones } from "~/composables/useNotificaciones";
+import { ref, computed, onMounted } from 'vue';
 
-definePageMeta({
-    layout: 'dasboradlyt',
-    middleware: [
-        'auth',
-    ],
+const { fetchNotificacion } = useNotificaciones();
+const notificacion = ref([]);
 
+// Fetch notifications
+onMounted(async () => {
+    try {
+        const data = await fetchNotificacion();
+        notificacion.value = data.results;
+    } catch (e) {
+        console.log('Error al obtener los datos', e);
+    }
 });
 
-onMounted( async ()=>{
+onBeforeMount(async () => {
     try {
-       const data = await fetchNotificacion()
-       notificacion.value = data.results
-    }catch (e){
-        console.log('Error el obtener los datos',e)
+        const data = await fetchNotificacion();
+        notificacion.value = data.results;
+    } catch (e) {
+        console.log('Error al obtener los datos', e);
     }
+});
 
-})
+// Definir enlaces para el breadcrumb
+const links = [
+    {
+        label: 'Notificaciones',
+        icon: 'i-heroicons-square-3-stack-3d',
+    },
+];
 
+// Opciones para los tipos de notificaciones
+const estado = [
+    { id: "all", name: 'Todos' }, // Opción para mostrar todas las notificaciones
+    { id: "info", name: 'Informacion' },
+    { id: "warning", name: 'Problema' },
+    { id: "error", name: 'Error' },
+    { id: "success", name: 'Suceso' },
+];
 
-const links = [ {
-    label: 'Notificaciones',
-    icon: 'i-heroicons-square-3-stack-3d',
+// Valor seleccionado para el tipo de notificación
+const selected = ref(estado[0].id);
 
-}]
+// Toggle para filtrar por estado de leído/no leído
+const leido = ref(false);
+
+// Función para obtener el color de la notificación según el tipo
+function getColor(value) {
+    const colors = { info: 'emerald', warning: 'yellow', error: 'red', success: 'sky' };
+    return colors[value] || 'gray';
+}
+
+// Filtrar notificaciones según el tipo seleccionado y estado de leído/no leído
+const filteredNotificaciones = computed(() => {
+    return notificacion.value.filter(item => {
+        const tipoMatches = selected.value === 'all' || item.notification_type === selected.value;
+        const leidoMatches = item.is_read === leido.value;
+        return tipoMatches && leidoMatches;
+    });
+});
+
+// Definir metadatos de la página
+definePageMeta({
+    layout: 'dasboradlyt',
+    middleware: ['auth'],
+});
 
 </script>
 
@@ -38,19 +78,36 @@ const links = [ {
             <h1 class="text-xl font-bold">Notificaciones</h1>
         </section>
 
-        <UAlert title="Customize Alert Icon" description="Insert custom content into the icon slot!" icon="i-heroicons-command-line">
-            <template #icon="{ icon }">
-                <UBadge size="sm">
-                    <UIcon :name="icon" />
-                </UBadge>
-            </template>
-        </UAlert>
+        <!-- Formulario para seleccionar estado y tipo de notificación -->
+        <UForm class="my-3">
+            <UFormGroup label="Estado leido">
+                <UToggle v-model="leido" />
+            </UFormGroup>
+
+            <UFormGroup label="Tipo de Notificación">
+                <USelectMenu
+                    v-model="selected"
+                    :options="estado"
+                    placeholder="Seleccione un tipo de notificación"
+                    value-attribute="id"
+                    option-attribute="name"
+                />
+            </UFormGroup>
+        </UForm>
+
+        <!-- Mostrar notificaciones filtradas -->
+        <div v-for="item in filteredNotificaciones" :key="item.id">
+            <UAlert
+                :title="item.tittle"
+                :description="item.message"
+                :icon="item.notification_type === 'info' ? 'i-heroicons-information-circle' : 'i-heroicons-command-line'"
+                :color="getColor(item.notification_type)"
+                class="my-2"
+            />
+        </div>
     </section>
-    <pre>
-        {{notificacion}}
-    </pre>
 </template>
 
 <style scoped>
-
+/* Scoped styles */
 </style>

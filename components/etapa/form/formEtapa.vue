@@ -2,6 +2,10 @@
 import {type InferType, object, string,number} from 'yup'
 import type {FormSubmitEvent} from '#ui/types'
 import {useEtapa} from "~/composables/useEtapa";
+import {useNotificaciones} from "~/composables/useNotificaciones";
+import {useAuthStore} from "~/stores/auth";
+
+const { postNotificacion } = useNotificaciones();
 const {postEtapa}=useEtapa()
 const toast = useToast()
 const props = defineProps({
@@ -20,7 +24,9 @@ const schema = object({
     activo: number().required('Requerido'),
     duracion_en_horas: string().required('Requerido'),
 })
-
+const authStore = useAuthStore()
+// @ts-ignore
+const iduser = authStore.user.id
 type Schema = InferType<typeof schema>
 
 const state = reactive({
@@ -42,10 +48,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         emit('form-success');
         toast.add({
             id: 'update_downloaded',
-            title: 'Proceso Creado',
+            title: 'Etapa Creado',
             icon: 'i-octicon-desktop-download-24',
             timeout: 6000,
 
+        })
+        await postNotificacion({
+            user:iduser,
+            message:"Etapa Creada",
+            tittle: "Etapa  Creado exitosamente",
+            notification_type:"success"
         })
     } catch (error) {
         console.error('Error al crear el proceso:', error.message)

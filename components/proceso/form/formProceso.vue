@@ -5,6 +5,11 @@ import {useEquipo} from "~/composables/useEquipo";
 import {useProceso} from "~/composables/useProceso"
 import {onBeforeMount, onMounted, ref, reactive} from "vue";
 import {defineProps} from "vue";
+const { postNotificacion } = useNotificaciones();
+
+import { useNotificaciones } from "~/composables/useNotificaciones";
+import {useAuthStore} from "~/stores/auth";
+
 const toast = useToast()
 const {fetchEquipos} = useEquipo()  // Importa también el método postProceso
 const {postProceso} = useProceso()
@@ -33,6 +38,9 @@ const state = reactive({
     usuario: Number,  // Asigna el valor de usuario en onSubmit
     fkequipo: Number,
 })
+const authStore = useAuthStore()
+// @ts-ignore
+const iduser = authStore.user.id
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
     try {
@@ -55,6 +63,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             icon: 'i-octicon-desktop-download-24',
             timeout: 6000,
 
+        })
+        await postNotificacion({
+            user:iduser,
+            message:"Creado proceso",
+            tittle: "Proceso  Creado exitosamente",
+            notification_type:"success"
         })
     } catch (error) {
         console.error('Error al crear el proceso:', error.message)
