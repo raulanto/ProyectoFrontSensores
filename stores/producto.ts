@@ -39,7 +39,7 @@ export const useProductoStore = defineStore('producto', () => {
 
         try {
             const { data, error: fetchError } = await useFetch<ApiResponse>(
-                `http://127.0.0.1:8000/api/v1/producto/?usuario=${iduser}`,
+                `https://apis-production-9a03.up.railway.app/api/v1/producto/?usuario=${iduser}`,
                 {
                     headers: {
                         Authorization: `Token ${token}`
