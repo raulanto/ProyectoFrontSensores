@@ -9,7 +9,7 @@ export function useProceso() {
 
     // Método para obtener procesos (GET)
     async function fetchProceso() {
-        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/proceso/?usuario=${iduser}`, {
+        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/proceso/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
