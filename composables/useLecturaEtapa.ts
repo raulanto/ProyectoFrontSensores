@@ -18,7 +18,7 @@ export function useLecturaEtapa() {
     // @ts-ignore
     const iduser=authStore.user.id
     async function fetchLectura(etapa:number) {
-        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/lectura/?fkEtapa=${etapa}`, {
+        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/lectura/?fkEtapa=${etapa}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -31,7 +31,7 @@ export function useLecturaEtapa() {
 
     async function fetchLecturaEquipo(etapa:number,fkESeccionEquipoSensor:number) {
         const { data, error } =
-            await useFetch(`http://127.0.0.1:8000/api/v1/lectura/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
+            await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/lectura/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

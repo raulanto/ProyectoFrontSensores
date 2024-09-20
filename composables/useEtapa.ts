@@ -28,7 +28,7 @@ export function useEtapa() {
     const authStore = useAuthStore()
 
     async function fetchEtapa(fkProceso: number) {
-        const {data, error} = await useFetch(`http://127.0.0.1:8000/api/v1/etapa/?fkProceso=${fkProceso}`, {
+        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/etapa/?fkProceso=${fkProceso}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -43,7 +43,7 @@ export function useEtapa() {
         fkProceso: FkProceso;
         etapaPrincipal: { duracion: string; id: number; nombre: string; activo: boolean }
     }> {
-        const {data, error} = await useFetch(`http://127.0.0.1:8000/api/v1/etapa/?id=${id}`, {
+        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/etapa/?id=${id}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`,
             },
@@ -81,7 +81,7 @@ export function useEtapa() {
     }
 
     async function postEtapa(proceso: { nombre: string; descripcion: string; duracion: string; fkProceso: number; activo:number }) {
-        const {data, error} = await useFetch('http://127.0.0.1:8000/api/v1/etapa/registro/', {
+        const {data, error} = await useFetch('https://apis-production-9a03.up.railway.app/api/v1/etapa/registro/', {
             method: 'POST',
             headers: {
                 Authorization: `Token ${authStore.token}`,
@@ -97,7 +97,7 @@ export function useEtapa() {
         return data.value
     }
     async function putEtapa(proceso: { activo:number },id:number) {
-        const {data, error} = await useFetch(`http://127.0.0.1:8000/api/v1/etapa/${id}/`, {
+        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/etapa/${id}/`, {
             method: 'PUT',
             headers: {
                 Authorization: `Token ${authStore.token}`,

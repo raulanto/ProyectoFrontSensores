@@ -11,7 +11,7 @@ export function usePlanta() {
     const token = authStore.token
 
     async function fetchPlantas() {
-        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/planta/?usuario=${iduser}`, {
+        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/planta/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

@@ -22,7 +22,7 @@ export function useProceso() {
         return data.value
     }
     async function fetchProcesoId(id:number) {
-        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/proceso/?usuario=${iduser}&id=${id}`, {
+        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/proceso/?usuario=${iduser}&id=${id}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -38,7 +38,7 @@ export function useProceso() {
 
     // Método para crear un nuevo proceso (POST)
     async function postProceso(proceso: { nombre: string; descripcion: string; usuario: number; fkequipo: number }) {
-        const { data, error } = await useFetch('http://127.0.0.1:8000/api/v1/proceso/registro/', {
+        const { data, error } = await useFetch('https://apis-production-9a03.up.railway.app/api/v1/proceso/registro/', {
             method: 'POST',
             headers: {
                 Authorization: `Token ${authStore.token}`,

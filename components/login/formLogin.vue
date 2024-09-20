@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { object, string, type InferType } from 'yup'
-import { useFetch,useRouter } from '#imports'
+import { useFetch, useRouter } from '#imports'
 import { useAuthStore } from '~/stores/auth'
 import type { FormSubmitEvent } from '#ui/types'
+const toast = useToast()
 const authStore = useAuthStore()
 const router = useRouter()
+
 // Definir el esquema de validación con Yup
 const schema = object({
-    username:  string()
-        .required('Required'),
+    username: string()
+        .required('Nombre de usuario requerido'),
     password: string()
-        .required('Required')
+        .required('Contraseña requerida')
 })
 
 type Schema = InferType<typeof schema>
@@ -30,7 +32,7 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
     event.preventDefault()
 
     try {
-        const { data, pending, error, refresh } = await useFetch('http://127.0.0.1:8000/api-token-auth/', {
+        const { data, error } = await useFetch('https://apis-production-9a03.up.railway.app/api-token-auth/', {
             method: 'POST',
             body: {
                 username: state.username,
@@ -47,13 +49,34 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
             })
 
             // Redirigir a la página principal u otra página protegida
-            navigateTo('/equipos')
+            router.push('/equipos')
+            toast.add({
+                id: 'update_downloaded',
+                title: 'A entrado de Correctamente',
+                icon: 'i-octicon-desktop-download-24',
+                timeout: 6000,
+
+            })
         } else if (error.value) {
-            // Manejar el error, mostrar mensaje al usuario, etc.
-            console.error('Error:', error.value)
+            // Verifica si existen `non_field_errors` en la respuesta
+            if (error.value.data?.non_field_errors) {
+                toast.add({
+                    id: 'update_downloaded',
+                    title: 'Error de Credenciales',
+                    icon: 'i-octicon-desktop-download-24',
+                    timeout: 6000,
+
+                })
+                console.error('Error de credenciales:', error.value.data.non_field_errors[0])
+                apiError.value = error.value.data.non_field_errors[0]
+            } else {
+                console.error('Error:', error.value)
+                apiError.value = 'Ocurrió un error inesperado.'
+            }
         }
     } catch (error) {
         console.error('Error en la solicitud de inicio de sesión:', error)
+        apiError.value = 'Error de conexión con el servidor.'
     }
 }
 </script>
@@ -81,22 +104,19 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
                 </h1>
                 <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
                     <UFormGroup label="Username" name="username">
-                        <UInput v-model="state.username"     size="md"/>
+                        <UInput v-model="state.username" size="md"/>
                     </UFormGroup>
 
                     <UFormGroup label="Password" name="password">
-                        <UInput v-model="state.password" type="password"     size="md"/>
+                        <UInput v-model="state.password" type="password" size="md"/>
                     </UFormGroup>
 
                     <UButton type="submit" block>
                         Entrar
                     </UButton>
-                    <p v-if="apiError">{{ apiError }}</p>
+
                 </UForm>
             </div>
-
         </div>
     </div>
-
-
 </template>

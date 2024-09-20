@@ -6,7 +6,7 @@ export function useseccionSensor() {
     const authStore = useAuthStore()
 
     async function fetchseccionSensor(fkseccionEquipo:number) {
-        const { data, error } = await useFetch(`http://127.0.0.1:8000/api/v1/seccionSensor/?fkseccionEquipo=${fkseccionEquipo}`, {
+        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/seccionSensor/?fkseccionEquipo=${fkseccionEquipo}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
