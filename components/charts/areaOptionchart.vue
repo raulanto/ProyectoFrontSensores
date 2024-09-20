@@ -58,8 +58,6 @@ const result = findMaxMin(props.series)
 const maximo = parseFloat(result.max)
 const minimo = parseFloat(result.min)
 
-console.log(maximo);
-console.log(minimo);
 
 let chartOptions: ApexCharts.ApexOptions
 chartOptions = {

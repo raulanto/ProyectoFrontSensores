@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {computed, onBeforeMount, onMounted, ref} from 'vue'
 import {useProductoStore} from '~/stores/producto'
+import {useRouter} from "#imports";
 
 const productoStore = useProductoStore()
 const {productos, error, fetchProducto, loading} = productoStore
@@ -42,6 +43,19 @@ const links = [ {
     icon: 'i-heroicons-square-3-stack-3d',
 
 }]
+const router = useRouter()
+
+const { metaSymbol } = useShortcuts()
+
+
+defineShortcuts({
+    meta_o: {
+        usingInput: true,
+        handler: () => {
+            router.push('/producto/crearProducto')
+        }
+    }
+})
 </script>
 
 <template>
@@ -51,7 +65,11 @@ const links = [ {
         <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
 
             <NuxtLink to="/producto/crearProducto">
+                <UTooltip text="Crear producto" :shortcuts="[metaSymbol, 'O']">
+
                 <UButton>Crear un producto</UButton>
+                </UTooltip>
+
             </NuxtLink>
         </div>
         <div>

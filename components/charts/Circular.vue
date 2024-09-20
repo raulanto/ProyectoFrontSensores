@@ -43,7 +43,10 @@ import {defineProps, onMounted,onBeforeUnmount, ref} from 'vue';
 import {useLecturaEtapa} from '~/composables/useLecturaEtapa';
 import Gauge from "~/components/charts/gauge.vue";
 import {onBeforeMount} from "vue";
-
+import { useNotificaciones } from "~/composables/useNotificaciones";
+const { postNotificacion } = useNotificaciones();
+import {useAuthStore} from "~/stores/auth";
+const authStore = useAuthStore()
 // Define the props
 const props = defineProps({
     name: {
@@ -107,22 +110,28 @@ async function recargarDatos() {
         isLoading.value = false;
     }
 }
-
+const iduser = authStore.user.id
 // Calculate percentage
-function calcularPorcentaje() {
-    const array = valoresArray.value;
+async function calcularPorcentaje() {
+    try {
+        const array = valoresArray.value;
 
-    if (array.length === 0) {
-        console.error('Array de valores está vacío');
-        return;
+        if (array.length === 0) {
+            console.error('Array de valores está vacío');
+            return;
+        }
+
+        const sumatoria = array.reduce((acc, valor) => acc + valor, 0);
+        const promedio = sumatoria / array.length;
+        const elementosCumplenCondicion = array.filter(valor => valor > promedio).length;
+
+        porcentaje.value = ((elementosCumplenCondicion / array.length) * 100).toFixed(1);
+        console.log(`Porcentaje de valores mayores que el promedio (${promedio.toFixed(2)}): ${porcentaje.value}%`);
+
+    }catch (error) {
+        console.error('Error:', error.message)
     }
 
-    const sumatoria = array.reduce((acc, valor) => acc + valor, 0);
-    const promedio = sumatoria / array.length;
-    const elementosCumplenCondicion = array.filter(valor => valor > promedio).length;
-
-    porcentaje.value = ((elementosCumplenCondicion / array.length) * 100).toFixed(1);
-    console.log(`Porcentaje de valores mayores que el promedio (${promedio.toFixed(2)}): ${porcentaje.value}%`);
 }
 
 // Set up auto-refresh every 30 seconds

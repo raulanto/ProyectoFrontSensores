@@ -226,13 +226,13 @@ function getColor(value) {
             </div>
             <div v-else-if="item.key === 'grafico'" class="space-y-3">
                                 <div class="grid grid-cols-2 grid-rows-1 gap-4">
-                                    <div ><circular :etapa="id" :fk="13" :name="'pH'"/></div>
+                                    <div ><circular :etapa="id" :fk="1" :name="'pH'"/></div>
                                     <div ><circular :etapa="id" :fk="8" :name="'Oxigeno Disuelto'"/></div>
                                 </div>
 
                                 <div class="grid grid-cols-2 grid-rows-1 gap-4">
                                     <div class="col-span-2">
-                                        <view-area :etapa="id"  :name="'Oxiegeno disuelto'" :fk="8" :y="5.0" :y2="7.0" />
+                                        <view-area :etapa="id"  :name="'Oxiegeno disuelto'" :fk="1" :y="5.0" :y2="7.0" />
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 grid-rows-1 gap-4">

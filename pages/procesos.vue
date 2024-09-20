@@ -104,6 +104,7 @@ async function recargardatos(){
     <UBreadcrumb :links="links" class="section-card"/>
 
     <div class="section-card">
+
         <modal-form-proceso @recargardatos="recargardatos"/>
         <UTable
             :rows="rows"

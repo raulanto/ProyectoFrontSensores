@@ -56,11 +56,21 @@ function handleFileChange(event: Event) {
         state.img = URL.createObjectURL(target.files[0]);
     }
 }
+const links = [ {
+    label: 'Productos',
+    icon: 'i-heroicons-home',
+    to: '/productos'
 
+},
+    {
+        label: 'Crear productos',
+        icon: 'i-heroicons-square-3-stack-3d',
+        to: '/'
+    }]
 </script>
 
 <template>
-
+    <UBreadcrumb :links="links" class="section-card"/>
     <div class="w-full rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 my-2 p-3 ">
         <UFormGroup>
             <!-- Componente de Avatar que mostrará la imagen -->

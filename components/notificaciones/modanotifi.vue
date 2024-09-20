@@ -43,10 +43,26 @@ definePageMeta({
 });
 
 const isOpen = ref(false);
+
+const { metaSymbol } = useShortcuts()
+
+
+defineShortcuts({
+    meta_P: {
+        usingInput: true,
+        handler: () => {
+            isOpen.value = !isOpen.value
+        }
+    }
+})
 </script>
 
 <template>
-    <UButton label="Notificaciones" @click="isOpen = true"/>
+    <UTooltip text="Mostrar" :shortcuts="[metaSymbol, 'P']">
+        <UChip>
+             <UButton label="Notificaciones" @click="isOpen = true" color="white"     chip-color="primary"/>
+        </UChip>
+    </UTooltip>
 
     <USlideover v-model="isOpen" prevent-close>
         <UCard class="flex flex-col flex-1">

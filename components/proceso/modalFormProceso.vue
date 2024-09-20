@@ -8,12 +8,24 @@ const emit = defineEmits(['recargardatos']);
 const closeModal = () => {
     isOpen.value = false;
 };
+const { metaSymbol } = useShortcuts()
+
+
+defineShortcuts({
+    meta_o: {
+        usingInput: true,
+        handler: () => {
+            isOpen.value = !isOpen.value
+        }
+    }
+})
 </script>
 
 <template>
     <div>
-        <UButton color="white" label="Crear Proceso" variant="solid" @click="isOpen = true"/>
-
+        <UTooltip text="Crear proceso" :shortcuts="[metaSymbol, 'O']">
+            <UButton color="white" label="Crear Proceso" variant="solid" @click="isOpen = true"/>
+        </UTooltip>
         <UModal v-model="isOpen" prevent-close>
             <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
                 <template #header>
