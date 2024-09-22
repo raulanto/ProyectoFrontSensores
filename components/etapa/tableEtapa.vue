@@ -2,6 +2,7 @@
 
 import {ref, computed, onMounted, onBeforeMount} from 'vue'
 import {useEtapa} from '~/composables/useEtapa'
+import ModalformEtapa from "~/components/etapa/modalformEtapa.vue";
 
 
 const props=defineProps({
@@ -81,35 +82,55 @@ const columns = [
 
 ];
 
+async function recargardatos(){
+    try {
+        const data = await fetchEtapa(props.id)
+        etapa.value = data.results
+    } catch (e) {
+        console.error('Error al obtener los datos:', e.message)
+    }
+}
+
+
 </script>
 
 <template>
-    <UTable
-        :rows="rows"
-        :columns="columns"
-    >
-
-        <template  #activo-data="{ row }">
-            <UBadge
-                size="xs"
-                :label="getLabel(row.activo)"
-                :color="getColor(row.activo)"
-                variant="subtle"
-            />
-        </template>
-
-        <template #actions-data="{ row }">
-            <NuxtLink :to="{name:'estado-id',params:{id:row.id,proceso:props.id}}">
-                <UButton label="Entrar"/>
-            </NuxtLink>
-        </template>
-
-
-    </UTable>
-    <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
-        <UPagination v-model="page" :page-count="pageCount" :total="etapa.length" />
+    <div class="grid grid-cols-5 grid-rows-1 gap-4">
+        <div class="col-span-4 section-card">Etapas del proceso</div>
+        <div class="col-start-5 section-card">
+            <modalform-etapa :prceso-id="props.id" @recargardatos="recargardatos"/>
+        </div>
     </div>
 
+    <div class="section-card">
+        <UTable
+            :rows="rows"
+            :columns="columns"
+
+        >
+
+            <template  #activo-data="{ row }">
+                <UBadge
+                    size="xs"
+                    :label="getLabel(row.activo)"
+                    :color="getColor(row.activo)"
+                    variant="subtle"
+                />
+            </template>
+
+            <template #actions-data="{ row }">
+                <NuxtLink :to="{name:'estado-id',params:{id:row.id,proceso:props.id}}">
+                    <UButton label="Entrar"/>
+                </NuxtLink>
+            </template>
+
+
+        </UTable>
+        <div class="flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700">
+            <UPagination v-model="page" :page-count="pageCount" :total="etapa.length" />
+        </div>
+
+    </div>
 </template>
 
 <style scoped>

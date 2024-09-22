@@ -98,11 +98,13 @@ const todoStatus = [{
 
         <UTable :columns="columns" :rows="filteredRows">
             <template #caption>
-                <caption>Seccion Equipo</caption>
+                <caption>Equipos de medicion</caption>
             </template>
 
             <template #actions-data="{ row }">
-                <tablaseccion-sensor :fkseccion-equipo="row.id" :seccion="row.nombre" />
+                    <NuxtLink :to="{name:'sensoresequipo-id',params:{id:row.id,equipo:props.fkequipo}}">
+                        <UButton label="Mostrar Sensores" color="white"/>
+                    </NuxtLink>
             </template>
 
             <template #expand="{ row }">

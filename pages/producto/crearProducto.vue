@@ -14,7 +14,6 @@ definePageMeta({
 
 <template>
     <form-producto/>
-
 </template>
 
 <style scoped>

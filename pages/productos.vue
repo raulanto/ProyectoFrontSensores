@@ -1,29 +1,41 @@
 <script lang="ts" setup>
 import {computed, onBeforeMount, onMounted, ref} from 'vue'
-import {useProductoStore} from '~/stores/producto'
+import {useProducto} from "#imports";
 import {useRouter} from "#imports";
 
-const productoStore = useProductoStore()
-const {productos, error, fetchProducto, loading} = productoStore
+const {fetchProducto}=useProducto()
+
 
 const page = ref(1)
 const pageCount = 5
-
+const productos = ref([])
 onMounted(async () => {
-    await fetchProducto()
+    try {
+        const data = await fetchProducto()
+        productos.value=data.results
+    }catch (e) {
+        console.log("error",e)
+    }
 })
+
 onBeforeMount(async () => {
-    await fetchProducto()
+    try {
+        const data = await fetchProducto()
+        productos.value=data.results
+    }catch (e) {
+        console.log("error",e)
+    }
 })
+
+
+
 const rows = computed(() => {
-    return productos.slice((page.value - 1) * pageCount, page.value * pageCount)
+    return productos.value.slice((page.value - 1) * pageCount, page.value * pageCount)
 })
 
 const columns = [
     {key: 'id', label: 'ID'},
-    {key: 'fotografia', label: 'Producto'},
     {key: 'nombre', label: 'Nombre'},
-    {key: 'descripcion', label: 'Descripción'},
     {key: 'actions', label: 'Acciones'},
 ]
 

@@ -12,7 +12,7 @@ const { metaSymbol } = useShortcuts()
 
 
 defineShortcuts({
-    meta_o: {
+    meta_c: {
         usingInput: true,
         handler: () => {
             isOpen.value = !isOpen.value
@@ -23,7 +23,7 @@ defineShortcuts({
 
 <template>
     <div>
-        <UTooltip text="Crear proceso" :shortcuts="[metaSymbol, 'O']">
+        <UTooltip text="Crear proceso" :shortcuts="[metaSymbol, 'c']">
             <UButton color="white" label="Crear Proceso" variant="solid" @click="isOpen = true"/>
         </UTooltip>
         <UModal v-model="isOpen" prevent-close>
@@ -37,7 +37,8 @@ defineShortcuts({
                                  @click="isOpen = false"/>
                     </div>
                 </template>
-                <form-proceso :is-open="isOpen" @form-success="closeModal" @recargardatos="$emit('recargardatos')"/>            </UCard>
+                <form-proceso :is-open="isOpen" @form-success="closeModal" @recargardatos="$emit('recargardatos')"/>
+            </UCard>
         </UModal>
     </div>
 </template>

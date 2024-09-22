@@ -10,28 +10,28 @@ const route = useRoute();
 
 const links = [{
     label: 'Equipo',
-    icon: 'i-heroicons-home',
+    icon: 'i-fe-layout',
     to: `/equipos`
 },
     {
         label: 'Planta',
-        icon: 'i-heroicons-chart-bar',
+        icon: 'i-heroicons-home-solid',
         to: "/planta"
     }, {
         label: 'Producto',
-        icon: 'i-heroicons-command-line',
+        icon: 'i-heroicons-outline-archive',
         to: '/productos'
     }, {
         label: 'Sensores',
-        icon: 'i-heroicons-command-line',
+        icon: 'i-heroicons-outline-signal',
         to: '/sensores'
     }, {
         label: 'Procesos',
-        icon: 'i-heroicons-command-line',
+        icon: 'i-fe-prototype',
         to: '/procesos'
     }, {
         label: 'Notificaciones',
-        icon: 'i-heroicons-command-line',
+        icon: 'i-heroicons-bell-alert-16-solid',
         to: '/notificaciones'
     }
     ]

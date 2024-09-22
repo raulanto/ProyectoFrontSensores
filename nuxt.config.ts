@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     modules: [
       '@nuxt/ui',
       '@pinia/nuxt',
-      '@formkit/auto-animate',
+      '@formkit/auto-animate/nuxt'
     ],
     colorMode: {
         preference: 'light'

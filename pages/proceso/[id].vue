@@ -40,6 +40,14 @@ const rows = computed(() => {
 })
 
 
+async function recargardatos(){
+    try {
+        const data = await fetchProcesoId(id.value)
+        proceso.value = data.results
+    } catch (e) {
+        console.error('Error al obtener los datos:', e.message)
+    }
+}
 
 
 definePageMeta({
@@ -76,13 +84,11 @@ const links = [ {
 
 
 
-    <div class="grid grid-cols-5 grid-rows-1 gap-4">
-        <div class="col-span-4 section-card">Etapas del proceso</div>
-        <div class="col-start-5 section-card">            <modalform-etapa :prceso-id="id"/></div>
-    </div>
 
     <div class="grid grid-cols-5 grid-rows-2 gap-4">
-        <div class="col-span-5 row-span-2 section-card"> <table-etapa :id="id"/></div>
+        <div class="col-span-5 row-span-2 ">
+            <table-etapa :id="id"/>
+        </div>
     </div>
 
 </template>

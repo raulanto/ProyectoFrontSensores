@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {computed, onBeforeMount, onMounted, ref} from 'vue'
 import {useEquipo} from '~/composables/useEquipo'
-import Formequipo from "~/components/equipo/modalForm.vue";
+import ModalFormEquipo from "~/components/equipo/modalFormEquipo.vue";
 
 
 const {fetchEquipos} = useEquipo()
@@ -27,6 +27,16 @@ onBeforeMount(async () => {
     }
 })
 
+async function recargardatos(){
+    try {
+        const data = await fetchEquipos()
+        equipos.value = data.results
+    } catch (error) {
+        console.error('Error al actualizar el estado:', error.message);
+    }
+}
+
+
 const page = ref(1)
 const pageCount = 5
 
@@ -42,6 +52,13 @@ definePageMeta({
     ],
 
 });
+
+const links = [ {
+    label: 'Equipo',
+    icon: 'i-heroicons-square-3-stack-3d',
+
+}]
+
 
 const columns = [
     {
@@ -61,10 +78,6 @@ const columns = [
         label: 'Planta'
     },
     {
-        key: 'fkproducto_nombre',
-        label: 'Producto'
-    },
-    {
         key: 'actions'
     }]
 
@@ -74,9 +87,11 @@ const router = useRouter()
 </script>
 
 <template>
+    <UBreadcrumb :links="links" class="section-card"/>
+
     <div class="section-card">
         <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-            <formequipo/>
+            <modal-form-equipo @recargardatos="recargardatos"/>
         </div>
         <UTable
             :columns="columns"

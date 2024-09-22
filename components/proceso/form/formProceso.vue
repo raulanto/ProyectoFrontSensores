@@ -5,11 +5,10 @@ import {useEquipo} from "~/composables/useEquipo";
 import {useProceso} from "~/composables/useProceso"
 import {onBeforeMount, onMounted, ref, reactive} from "vue";
 import {defineProps} from "vue";
-const { postNotificacion } = useNotificaciones();
-
 import { useNotificaciones } from "~/composables/useNotificaciones";
 import {useAuthStore} from "~/stores/auth";
 
+const { postNotificacion } = useNotificaciones();
 const toast = useToast()
 const {fetchEquipos} = useEquipo()  // Importa también el método postProceso
 const {postProceso} = useProceso()

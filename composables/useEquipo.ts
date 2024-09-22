@@ -1,13 +1,14 @@
 // composables/useEquipo.ts
-import { useFetch } from '#app'
-import { useAuthStore } from '~/stores/auth'
+import {useFetch} from '#app'
+import {useAuthStore} from '~/stores/auth'
 
 export function useEquipo() {
     const authStore = useAuthStore()
     // @ts-ignore
-    const iduser=authStore.user.id
+    const iduser = authStore.user.id
+
     async function fetchEquipos() {
-        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/equipo/?usuario=${iduser}`, {
+        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/equipo/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -20,7 +21,33 @@ export function useEquipo() {
         return data.value
     }
 
+    async function postEquipos(
+        equipo: {
+            nombre: string;
+            descripcion: string;
+            fkplanta: number;
+            fkproducto: number;
+            usuario: number
+        }
+    ) {
+        const {data, error} = await useFetch('https://apis-production-9a03.up.railway.app/api/v1/equipo/registro/', {
+            method: 'POST',
+            headers: {
+                Authorization: `Token ${authStore.token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(equipo)
+        })
+
+        if (error.value) {
+            throw new Error('Error al crear el proceso')
+        }
+
+        return data.value
+    }
+
     return {
         fetchEquipos,
+        postEquipos
     }
 }

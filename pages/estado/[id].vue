@@ -13,6 +13,7 @@ const { fetchProceso } = useProceso();
 const { fetchEtapaid, putEtapa } = useEtapa();
 
 const id = ref(route.params.id);
+const idproceso=ref(route.params.proceso)
 const proceso = ref([]);
 const etapa = ref({});
 const fkequipo = ref(null);
@@ -59,6 +60,11 @@ onBeforeMount(async () => {
 // Función para calcular el progreso
 // Función para calcular el progreso
 const startProgress = ({ created_at, createdTime_at, duracion, updated_at, activo }) => {
+    if (activo === 2 || activo === 3) {
+        // Si el estado es desactivado (2) o terminado (3), no iniciar el progreso
+        return;
+    }
+
     const totalDurationMs = convertDurationToMs(duracion);
     const createdDateTime = new Date(`${created_at}T${createdTime_at}`);
     const updatedDateTime = new Date(updated_at);
@@ -67,19 +73,6 @@ const startProgress = ({ created_at, createdTime_at, duracion, updated_at, activ
     const elapsedTime = updated_at ? (updatedDateTime - createdDateTime) : 0;
     remainingTime.value = totalDurationMs - elapsedTime;
 
-    // Si el estado es 'Terminado', mostrar 100% de progreso
-    if (activo === 3) {
-        progressValue.value = 100;
-        return;  // No hacer nada más si ya está terminado
-    }
-
-    // Si el estado es 'Desactivado', mostrar el progreso hasta donde se quedó
-    if (activo === 2) {
-        progressValue.value = Math.min(((totalDurationMs - remainingTime.value) / totalDurationMs) * 100, 100);
-        return;  // No avanzar el progreso si está desactivado
-    }
-
-    // Si el estado es 'Activo', iniciar el progreso
     if (activo === 1 && remainingTime.value > 0) {
         intervalId.value = setInterval(() => {
             remainingTime.value -= 1000;
@@ -94,12 +87,13 @@ const startProgress = ({ created_at, createdTime_at, duracion, updated_at, activ
     }
 };
 
-// Observa el cambio en "activo" para pausar o reanudar el progreso
+
 watch(() => etapaPrincipaldata.value.activo, (newValue) => {
     clearInterval(intervalId.value);  // Detener cualquier intervalo activo
-    startProgress(etapaPrincipaldata.value);  // Reiniciar el cálculo del progreso basado en el nuevo estado
+    if (newValue === 1) {
+        startProgress(etapaPrincipaldata.value);
+    }
 });
-
 // Función para marcar la etapa como terminada
 const markAsFinished = async () => {
     await putEtapa({ activo: 3 }, id.value);  // Cambia el estado a 'Terminado'
@@ -125,6 +119,7 @@ const convertDurationToMs = (duration) => {
     const [hours, minutes, seconds] = duration.split(':').map(Number);
     return (hours * 3600 + minutes * 60 + seconds) * 1000;
 };
+// Función para convertir el tiempo de 24 horas a 12 horas
 
 // Observa el cambio en "activo" para pausar o reanudar el progreso
 watch(() => etapaPrincipaldata.value.activo, (newValue) => {
@@ -143,7 +138,7 @@ definePageMeta({
 
 const links = [
     { label: 'Proceso', icon: 'i-heroicons-square-3-stack-3d', to: '/procesos' },
-    { label: 'Panel del Proceso', icon: 'i-heroicons-square-3-stack-3d', to: { name: 'proceso-id', params: { id: id.value } } },
+    { label: 'Panel del Proceso', icon: 'i-heroicons-square-3-stack-3d', to: { name: 'proceso-id', params: { id: idproceso.value } } },
     { label: 'Panel de la etapa', icon: 'i-heroicons-link' },
 ];
 
@@ -189,7 +184,7 @@ function getColor(value) {
         <div class="col-start-3 section-card">
             <div class="flex flex-col">
                 <div>Fecha: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.created_at }}</span></div>
-                <div>Hora: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.createdTime_at }}</span></div>
+                <span class="font-bold text-primary-500">{{ (etapaPrincipaldata.createdTime_at) }}</span>
             </div>
         </div>
 

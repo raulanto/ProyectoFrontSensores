@@ -18,7 +18,7 @@ const props = defineProps({
         type:Boolean
     }
 })
-const emit = defineEmits(['form-success']);
+const emit = defineEmits(['form-success','recargardatos']);
 const schema = object({
     nombre: string().required('Requerido'),
     activo: number().required('Requerido'),
@@ -46,6 +46,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             fkProceso: Number(props.procesoid),
         })
         emit('form-success');
+        emit('recargardatos');
         toast.add({
             id: 'update_downloaded',
             title: 'Etapa Creado',
@@ -91,7 +92,7 @@ const duracionLista=[
     {name:"3 días: 72 horas",value:'72:00:00'},
     {name:"1 semana (7 días)",value:'168:00:00'},
     {name:"30 minutos",value:'00:30:00'},
-    {name:"30 ",value:'00:00:30'},
+    {name:"30 ",value:'00:00:60'},
 ]
 watch(() => props.isOpen, (newValue) => {
     if (!newValue) {

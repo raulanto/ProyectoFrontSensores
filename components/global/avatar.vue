@@ -11,7 +11,11 @@ const items = [
         label:authStore.user.email ,
         slot: 'account',
         disabled: true
-    }],
+    }],[{
+        label: 'Documentacion',
+        icon: 'i-heroicons-book-open',
+        click: () => docume()
+    },],
 /*    [{
         label: 'Settings',
         icon: 'i-heroicons-cog-8-tooth'
@@ -39,6 +43,11 @@ function logout() {
     authStore.logout()
         // Redrigir al usuario a la página de inicio de sesión
         router.push('/login')
+
+}
+function docume() {
+    // Redrigir al usuario a la página de inicio de sesión
+    router.push('/perfil/documentacion')
 
 }
 

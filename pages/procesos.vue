@@ -3,7 +3,6 @@ import {ref, computed, onMounted, onBeforeMount} from 'vue'
 import {useProceso} from '~/composables/useProceso'
 import ModalFormProceso from "~/components/proceso/modalFormProceso.vue";
 
-
 const {fetchProceso} = useProceso()
 
 
@@ -28,7 +27,7 @@ onBeforeMount(async () => {
 })
 
 const page = ref(1)
-const pageCount = 5
+const pageCount = 30
 
 const rows = computed(() => {
     return procesos.value.slice((page.value - 1) * pageCount, (page.value) * pageCount)
@@ -109,6 +108,7 @@ async function recargardatos(){
         <UTable
             :rows="rows"
             :columns="columns"
+
         >
             <template #actions-data="{ row }">
                 <NuxtLink :to="{name:'proceso-id',params:{id:row.id}}">
