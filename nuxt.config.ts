@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     },
     plugins: [
         {src:  '~/plugins/vue-apexcharts.js', ssr: false},
+        {src:  '~/plugins/vue-data-ui.client.js'},
     ],
     vite: {
         ssr: {

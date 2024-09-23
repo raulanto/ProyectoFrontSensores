@@ -37,39 +37,55 @@ const state = reactive({
 
 })
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-    try {
-        await postEtapa({
-            nombre: state.nombre,
-            activo: state.activo,
-            duracion: state.duracion_en_horas,
-            fkProceso: Number(props.procesoid),
-        })
-        emit('form-success');
-        emit('recargardatos');
-        toast.add({
-            id: 'update_downloaded',
-            title: 'Etapa Creado',
-            icon: 'i-octicon-desktop-download-24',
-            timeout: 6000,
+function getCurrentTime() {
+  const now = new Date();
+  let hours = now.getHours() % 12 || 12; // Convert 24-hour to 12-hour format
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+  const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
 
-        })
-        await postNotificacion({
-            user:iduser,
-            message:"Etapa Creada",
-            tittle: "Etapa  Creado exitosamente",
-            notification_type:"success"
-        })
-    } catch (error) {
-        console.error('Error al crear el proceso:', error.message)
-        toast.add({
-            id: 'update_downloaded',
-            title: 'Proceo no Creado',
-            icon: 'i-octicon-desktop-download-24',
-            timeout: 600,
-        })
-    }
+  // Add leading zeros to minutes and seconds if needed
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+
+  return `${hours}:${minutes}:${seconds}`;
 }
+
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  try {
+    await postEtapa({
+      nombre: state.nombre,
+      activo: state.activo,
+      duracion: state.duracion_en_horas,
+      fkProceso: Number(props.procesoid),
+      horacreacion: getCurrentTime(), // Get the formatted current time
+    })
+    emit('form-success');
+    emit('recargardatos');
+    toast.add({
+      id: 'update_downloaded',
+      title: 'Etapa Creado',
+      icon: 'i-octicon-desktop-download-24',
+      timeout: 6000,
+    })
+    await postNotificacion({
+      user: iduser,
+      message: "Etapa Creada",
+      tittle: "Etapa  Creado exitosamente",
+      notification_type: "success"
+    })
+  } catch (error) {
+    console.error('Error al crear el proceso:', error.message)
+    toast.add({
+      id: 'update_downloaded',
+      title: 'Proceo no Creado',
+      icon: 'i-octicon-desktop-download-24',
+      timeout: 600,
+    })
+  }
+}
+
 
 const estadoactivo = [{
     name: 'Activo',

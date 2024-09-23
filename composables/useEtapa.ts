@@ -80,7 +80,17 @@ export function useEtapa() {
         return {etapaPrincipal, fkProceso};
     }
 
-    async function postEtapa(proceso: { nombre: string; descripcion: string; duracion: string; fkProceso: number; activo:number }) {
+    async function postEtapa(
+        proceso:
+            {
+                nombre: string;
+                descripcion: string;
+                duracion: string;
+                fkProceso: number;
+                activo:number;
+                horacreacion:string;
+            }
+    ) {
         const {data, error} = await useFetch('https://apis-production-9a03.up.railway.app/api/v1/etapa/registro/', {
             method: 'POST',
             headers: {

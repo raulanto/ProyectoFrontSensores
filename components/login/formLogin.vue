@@ -49,7 +49,7 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
             })
 
             // Redirigir a la página principal u otra página protegida
-            router.push('/equipos')
+            router.push('/panel')
             toast.add({
                 id: 'update_downloaded',
                 title: 'A entrado de Correctamente',
