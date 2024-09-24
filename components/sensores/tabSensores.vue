@@ -73,10 +73,10 @@ onBeforeMount(async () => {
                         </section>
                     </div>
                     <div class="col-span-2 row-span-5 col-start-5">
-                        <viewp-h :etapa="item.etapa" :y2="0" :y="14" :fk="item.key" :name="item.label"/>
+                        <viewp-h :etapa="item.etapa" :y2="0" :y="60" :fk="item.key" :name="item.label"/>
                     </div>
                     <div class="col-span-4 row-span-4 row-start-2">
-                        <view-area :etapa="item.etapa" :y2="0" :y="14" :fk="item.key" :name="item.label"/>
+                        <view-area :etapa="item.etapa" :y2="0" :y="60" :fk="item.key" :name="item.label"/>
                     </div>
                 </div>
             </div>
@@ -107,10 +107,10 @@ onBeforeMount(async () => {
                         </section>
                     </div>
                     <div class="col-span-2 row-span-5 col-start-5">
-                        <viewp-h :etapa="item.etapa" :y2="0" :y="14" :fk="item.key" :name="item.label"/>
+                        <viewp-h :etapa="item.etapa" :y2="0" :y="100" :fk="item.key" :name="item.label"/>
                     </div>
                     <div class="col-span-4 row-span-4 row-start-2">
-                        <view-area :etapa="item.etapa" :y2="0" :y="14" :fk="item.key" :name="item.label"/>
+                        <view-area :etapa="item.etapa" :y2="0" :y="100" :fk="item.key" :name="item.label"/>
                     </div>
                 </div>
             </div>

@@ -4,17 +4,11 @@
           <NuxtLayout>
               <NuxtPage  />
           </NuxtLayout>
-
-
       <UNotifications />
-      <ClientOnly>
-          <VueUiCursor :config="congin"  />
-      </ClientOnly>
   </div>
 </template>
 <script setup lang="ts">
-import { VueUiCursor } from "vue-data-ui";
-import "vue-data-ui/style.css";
+
 const congin ={"isTrusted":true,"_vts":1727195331824}
 useHead({
     meta: [
