@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import VueApexCharts from 'vue3-apexcharts'
-import { defineProps } from 'vue'
-
-
+import { defineProps, watch } from 'vue';
+import VueApexCharts from 'vue3-apexcharts';
 
 const props = defineProps({
     series: {
@@ -14,64 +12,34 @@ const props = defineProps({
         required: true
     },
     fecha: {
-        type: Array
+        type: Array,
+        required: false
     },
     y: {
         type: Number,
-
+        required: false
     },
     y2: {
         type: Number,
+        required: false
+    }
+});
 
-    },
-
-})
-
-let chartSeries = props.series
-let labelValor = props.name
-
-const datanueva = [
+let chartSeries = ref([
     {
-        name: labelValor,
-        data: chartSeries
+        name: props.name,
+        data: props.series
     }
-]
+]);
 
-function findMaxMin(array) {
-    if (!Array.isArray(array) || array.length === 0) {
-        throw new Error('El arreglo no debe estar vacío.')
-    }
-    let max = array[0]
-    let min = array[0]
-    for (let i = 1; i < array.length; i++) {
-        if (array[i] > max) {
-            max = array[i]
-        }
-        if (array[i] < min) {
-            min = array[i]
-        }
-    }
-    return { max, min }
-}
-
-const result = findMaxMin(props.series)
-const maximo = parseFloat(result.max)
-const minimo = parseFloat(result.min)
-
-
-let chartOptions: ApexCharts.ApexOptions
-chartOptions = {
+let chartOptions = ref({
     chart: {
         type: 'area',
         height: 'auto',
-        width: 'auto',
-        maxWidth: 'auto',
-        fontFamily: 'Inter, sans-serif',
+        zoom: { enabled: true },
         stacked: false,
         offsetX: 0,
         colors: ['#c54a08'],
-
-
         zoom: {
             enabled: true,
             type: 'x',
@@ -88,50 +56,6 @@ chartOptions = {
                 }
             }
         }
-    },
-    annotations: {
-        yaxis: [
-            {
-                y: props.y,
-                borderColor: '#f2751c',
-                label: {
-                    borderColor: '#0a0000',
-                    style: {
-                        color: '#fff',
-                        background: '#f2751c',
-                    },
-                    text: `Valor minimo ${props.y}`,
-                },
-            },
-            {
-                y: props.y2,
-                borderColor: '#f2751c',
-                label: {
-                    borderColor: '#0a0000',
-                    style: {
-                        color: '#fff',
-                        background: '#f2751c',
-                    },
-                    text: `Valor maximo ${props.y2}`,
-                },
-            },
-            {
-                y: minimo,
-                y2: maximo,
-                borderColor: '#000',
-                fillColor: '#ecd8c4',
-                opacity: 0.2,
-                label: {
-                    borderColor: '#333',
-                    style: {
-                        fontSize: '10px',
-                        color: '#333',
-                        background: '#ffffff',
-                    },
-                    text: `Valor maximo ${maximo} Valor minimo ${minimo}`,
-                },
-            },
-        ],
     },
 
 
@@ -187,58 +111,28 @@ chartOptions = {
         }
     },
 
-    tooltip: {
-        enabled: true, // Enable tooltips
-        shared: true, // If multiple series are shown in a chart, show tooltip for all series
-        intersect: false, // Show tooltip only when cursor intersects a data point
-        followCursor: true, // Make tooltip follow cursor
-        fillSeriesColor: false,
-        theme: 'light', // Can be 'light' or 'dark'
+});
 
-        style: {
-            fontSize: '12px',
-            fontFamily: undefined
-        },
-        onDatasetHover: {
-            highlightDataSeries: true
-        },
-        x: {
-            show: true,
-            format: 'dd MMM', // Date format
-            formatter: undefined // Custom formatter function
-        },
+// Ver cambios en las props series y fecha para actualizar el gráfico
+watch(() => props.series, (newSeries) => {
+    chartSeries.value[0].data = newSeries;
+}, { deep: true });
 
-        z: {
-            formatter: undefined,
-            title: 'Size: '
-        },
-        marker: {
-            show: true
-        },
-        items: {
-            display: 'flex'
-        },
-        fixed: {
-            enabled: false,
-            position: 'topRight',
-            offsetX: 0,
-            offsetY: 0
-        }
-    }
-}
+watch(() => props.fecha, (newFecha) => {
+    chartOptions.value.xaxis.categories = newFecha;
+});
 </script>
+
 <template>
     <ClientOnly>
         <VueApexCharts
             type="area"
             height="350px"
             :options="chartOptions"
-            :series="datanueva"
-        ></VueApexCharts>
+            :series="chartSeries">
+        </VueApexCharts>
     </ClientOnly>
-
 </template>
-
 <style>
 .apexcharts-tooltip-marker {
     background-color: #f47836 !important; /* Cambia el color a rojo */

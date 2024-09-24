@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
 import { useLecturaEtapa } from '~/composables/useLecturaEtapa';
 import AreaOptionchart from "~/components/charts/areaOptionchart.vue";
+import CharPh from "~/components/charts/charPh.vue";
 
 const { fetchLecturaEquipo } = useLecturaEtapa();
 
@@ -37,11 +38,7 @@ async function recargarDatos() {
     try {
         const resultados = await fetchLecturaEquipo(etapa, fkvalor);
         const data = resultados.results.map((item: any) => ({
-            id: item.id,
             valor: item.valor,
-            fkEtapa: item.fkEtapa,
-            created_at: item.created_at,
-            createdTime_at: item.createdTime_at,
         }));
 
         // Actualizamos los arrays directamente
@@ -70,13 +67,13 @@ onMounted(() => {
 
 <template>
     <div>
-        <area-optionchart
-            :series="valoresArray"
+        <char-ph
             :name="props.name"
-            :fecha="valorFecha"
-            :y="props.y"
-            :y2="props.y2">
-        </area-optionchart>
+            :valorMax="props.y"
+            :valorMin="props.y2"
+            :valoresArray="valoresArray"
+        />
+
         <UButton @click="recargarDatos">Recargar Datos</UButton>
     </div>
 </template>

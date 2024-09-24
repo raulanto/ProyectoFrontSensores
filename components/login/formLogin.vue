@@ -7,7 +7,7 @@ import type { FormSubmitEvent } from '#ui/types'
 const toast = useToast()
 const authStore = useAuthStore()
 const router = useRouter()
-
+const apiUrl = useRuntimeConfig().public.apiKey;
 // Definir el esquema de validación con Yup
 const schema = object({
     username: string()
@@ -23,6 +23,7 @@ const state = reactive<Schema>({
     password: ''
 })
 
+
 // Estado para manejar los errores de validación y de la API
 const errors = reactive<Partial<Schema>>({})
 const apiError = ref<string | null>(null)
@@ -32,7 +33,7 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
     event.preventDefault()
 
     try {
-        const { data, error } = await useFetch('https://apis-production-9a03.up.railway.app/api-token-auth/', {
+        const { data, error } = await useFetch(`${apiUrl}/api-token-auth/`, {
             method: 'POST',
             body: {
                 username: state.username,

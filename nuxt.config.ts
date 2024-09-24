@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     modules: [
       '@nuxt/ui',
       '@pinia/nuxt',
-      '@formkit/auto-animate/nuxt'
+      '@formkit/auto-animate/nuxt',
     ],
     colorMode: {
         preference: 'light'
@@ -25,7 +25,11 @@ export default defineNuxtConfig({
             noExternal: ['vue3-apexcharts']
         }
     },
-
+    runtimeConfig: {
+        public: {
+            apiKey:'https://apis-production-9a03.up.railway.app'
+        }
+    }
 
 
 })

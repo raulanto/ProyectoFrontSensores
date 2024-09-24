@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@formkit/tempo": "^0.1.2",
+    "@nuxtjs/dotenv": "^1.4.2",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.5.4",
     "@primevue/themes": "^4.0.5",

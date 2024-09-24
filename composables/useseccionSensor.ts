@@ -1,12 +1,13 @@
-// composables/useEquipo.ts
+
 import { useFetch } from '#app'
 import { useAuthStore } from '~/stores/auth'
 
 export function useseccionSensor() {
     const authStore = useAuthStore()
+    const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchseccionSensor(fkseccionEquipo:number) {
-        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/seccionSensor/?fkseccionEquipo=${fkseccionEquipo}`, {
+        const { data, error } = await useFetch(`${apiUrl}/api/v1/seccionSensor/?fkseccionEquipo=${fkseccionEquipo}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

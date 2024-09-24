@@ -1,14 +1,14 @@
 // composables/useEquipo.ts
 import {useFetch} from '#app'
 import {useAuthStore} from '~/stores/auth'
-
 export function useEquipo() {
     const authStore = useAuthStore()
     // @ts-ignore
     const iduser = authStore.user.id
+    const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchEquipos() {
-        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/equipo/?usuario=${iduser}`, {
+        const {data, error} = await useFetch(`${apiUrl}/api/v1/equipo/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -30,7 +30,7 @@ export function useEquipo() {
             usuario: number
         }
     ) {
-        const {data, error} = await useFetch('https://apis-production-9a03.up.railway.app/api/v1/equipo/registro/', {
+        const {data, error} = await useFetch(`${apiUrl}/api/v1/equipo/registro/`, {
             method: 'POST',
             headers: {
                 Authorization: `Token ${authStore.token}`,

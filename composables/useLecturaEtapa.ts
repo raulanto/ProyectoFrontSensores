@@ -1,7 +1,6 @@
 // composables/useEquipo.ts
 import { useFetch } from '#app'
 import { useAuthStore } from '~/stores/auth'
-
 interface DatosLectura {
     id: number;
     valor:number;
@@ -17,8 +16,10 @@ export function useLecturaEtapa() {
     const authStore = useAuthStore()
     // @ts-ignore
     const iduser=authStore.user.id
+    const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
+
     async function fetchLectura(etapa:number) {
-        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/lectura/?fkEtapa=${etapa}`, {
+        const { data, error } = await useFetch(`${apiUrl}/api/v1/lectura/?fkEtapa=${etapa}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -31,7 +32,7 @@ export function useLecturaEtapa() {
 
     async function fetchLecturaEquipo(etapa:number,fkESeccionEquipoSensor:number) {
         const { data, error } =
-            await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/lectura/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
+            await useFetch(`${apiUrl}/api/v1/lectura/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

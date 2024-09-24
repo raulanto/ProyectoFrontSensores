@@ -6,8 +6,10 @@ import { useAuthStore } from '~/stores/auth'
 export function useSensores() {
     const authStore = useAuthStore()
     const iduser = authStore.user?.id
+    const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
+
     async function fetchSensor() {
-        const { data, error } = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/sensor/?usuario=${iduser}`, {
+        const { data, error } = await useFetch(`${apiUrl}/api/v1/sensor/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

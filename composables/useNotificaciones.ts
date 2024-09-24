@@ -1,14 +1,14 @@
 // composables/usenotificaciones.ts
 import {useFetch} from "#app";
 import {useAuthStore} from "~/stores/auth";
-
 export function useNotificaciones() {
     const authStore = useAuthStore()
     // @ts-ignore
     const iduser = authStore.user.id
+    const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchNotificacion() {
-        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/notificacion/?use=${iduser}`, {
+        const {data, error} = await useFetch(`${apiUrl}/api/v1/notificacion/?use=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -21,7 +21,7 @@ export function useNotificaciones() {
     }
 
     async function fetchNotificacionRead() {
-        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/notificacion/?use=${iduser}&is_read=false`, {
+        const {data, error} = await useFetch(`${apiUrl}/api/v1/notificacion/?use=${iduser}&is_read=false`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -42,7 +42,7 @@ export function useNotificaciones() {
 
         }
     ) {
-        const {data, error} = await useFetch('https://apis-production-9a03.up.railway.app/api/v1/notificacion/registro/', {
+        const {data, error} = await useFetch('${apiUrl}/api/v1/notificacion/registro/', {
             method: 'POST',
             headers: {
                 Authorization: `Token ${authStore.token}`,
@@ -64,7 +64,7 @@ export function useNotificaciones() {
                                        is_read: boolean
 
                                    }) {
-        const {data, error} = await useFetch(`https://apis-production-9a03.up.railway.app/api/v1/notificacion/${id}/`, {
+        const {data, error} = await useFetch(`${apiUrl}/api/v1/notificacion/${id}/`, {
             method: 'PUT',
             headers: {
                 Authorization: `Token ${authStore.token}`,
