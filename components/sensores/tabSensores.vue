@@ -61,9 +61,6 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <pre>
-    {{ items }}
-  </pre>
     <UTabs :items="items" class="w-full">
         <template #item="{ item }">
 
@@ -97,9 +94,25 @@ onBeforeMount(async () => {
                             <view-area :etapa="item.etapa" :y2="0" :y="14" :fk="item.key" :name="item.label"/>
                         </div>
                     </div>
+
+
+
+
             </div>
             <div v-else-if="item.key === 3" class="space-y-3">
-                {{item.label}}
+                <div class="grid grid-cols-6 grid-rows-5 gap-4">
+                    <div class="col-span-4">
+                        <section class="section-card">
+                            Sensor de {{item.label}}
+                        </section>
+                    </div>
+                    <div class="col-span-2 row-span-5 col-start-5">
+                        <viewp-h :etapa="item.etapa" :y2="0" :y="14" :fk="item.key" :name="item.label"/>
+                    </div>
+                    <div class="col-span-4 row-span-4 row-start-2">
+                        <view-area :etapa="item.etapa" :y2="0" :y="14" :fk="item.key" :name="item.label"/>
+                    </div>
+                </div>
             </div>
 
         </template>
