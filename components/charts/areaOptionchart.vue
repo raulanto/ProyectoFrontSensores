@@ -138,3 +138,5 @@ watch(() => props.fecha, (newFecha) => {
     background-color: #f47836 !important; /* Cambia el color a rojo */
 }
 </style>
+
+
