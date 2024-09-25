@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiKey:'https://apis-production-9a03.up.railway.app'
+            apiKey:'http://127.0.0.1:8000'
         }
     }
 

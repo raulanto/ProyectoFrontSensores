@@ -223,6 +223,7 @@ function getColor(value) {
         <tablaseccion-equipo :fkequipo="etapa.fkequipo"/>
       </div>
       <div v-else-if="item.key === 'grafico'" class="space-y-3">
+
         <tab-sensores :fkseccionEquipo="1" :idetapa="id"/>
       </div>
       <div v-else-if="item.key === 'lecturas'" class="space-y-3">
