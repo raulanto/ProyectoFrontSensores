@@ -1,8 +1,31 @@
-
 <script setup>
-import { computed } from "vue";
+import {computed, defineProps, ref, watch} from "vue";
 import { VueUiGauge } from "vue-data-ui";
 import "vue-data-ui/style.css"
+
+const props = defineProps({
+    name: {
+        type: String,
+        required: true
+    },
+    valoresArray: {
+        type: Array,
+        required: true
+    },
+    valorMax: {
+        type: Number,
+        required: true
+    },
+    valorMin: {
+        type: Number,
+        required: true
+    },
+    valorPas: {
+        type: Number,
+        required: true
+    },
+});
+const currentValue = ref(""); // Define a reactive value for the thermometer
 
 const config = computed(() => {
     return {
@@ -54,7 +77,7 @@ const config = computed(() => {
                     "roundingValue": 1
                 },
                 "title": {
-                    "text": "Title",
+                    "text": props.name,
                     "color": "#1A1A1A",
                     "fontSize": 20,
                     "bold": true,
@@ -91,27 +114,37 @@ const dataset = computed(() => {
         "series": [
             {
                 "from": 0,
-                "to": 5,
-                "color": "#6376DD",
+                "to": props.valorMin,
+                "color": "#ffcf00",
                 "id": "111"
             },
             {
-                "from": 5,
-                "to": 10,
+                "from": props.valorMin,
+                "to": props.valorMax,
                 "color": "#42d392",
                 "id": "222"
+            },
+            {
+                "from": props.valorMax,
+                "to": props.valorPas,
+                "color": "#ff0000",
+                "id": "9cb0373d-d245-4116-bc59-1932a06a7632"
             }
         ],
-        "value": 6
+        "value": currentValue.value
     }
 })
+watch(() => props.valoresArray, (newVal) => {
+    if (newVal && newVal.length > 0) {
+        currentValue.value = newVal[newVal.length - 1]; // Set the last fetched value
+    }
+}, { immediate: true });
 
 </script>
 
 <template>
-    <div style="width:600px">
+    <div style="width:500px">
         <ClientOnly>
-
             <VueUiGauge :config="config" :dataset="dataset" />
         </ClientOnly>
     </div>

@@ -84,7 +84,7 @@ const config = computed(() => ({
 const dataset = computed(() => ({
     "value": currentValue.value, // Bind the value to the reactive currentValue
     "from": 0,
-    "to": 14,
+    "to": props.valorMax,
     "steps": 20,
     "colors": {
         "from": "#ff6400",

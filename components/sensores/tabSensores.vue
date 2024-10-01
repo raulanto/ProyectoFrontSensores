@@ -46,12 +46,18 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-    <sectionchart-gaugue :etapa="props.idetapa" :valor-min="0" :valor-max="14" :fk="20" :name="'Oxigeno'"/>
-    <UDivider />
-    <sectionchart-gaugue :etapa="props.idetapa" :valor-min="-30" :valor-max="30" :fk="21" :name="'Temperatura'"/>
-    <UDivider />
-    <sectionchart-gaugue :etapa="props.idetapa" :valor-min="0" :valor-max="14" :fk="22" :name="'ph'"/>
-
+<!--    <secrionnueva :etapa="props.idetapa"  :fk="20" :name="'Oxigeno'"></secrionnueva>-->
+    <div class="grid grid-cols-6 grid-rows-2 gap-4">
+        <div class="col-span-2 row-span-2">
+            <secrionnueva :etapa="props.idetapa"  :fk="20" :name="'Oxigeno'" :valor-max="15" :valor-min="10" :valor-pas="20"></secrionnueva>
+        </div>
+        <div class="col-span-2 row-span-2 col-start-3">
+            <secrionnueva :etapa="props.idetapa"  :fk="21" :name="'Temperatura'" :valor-max="37" :valor-min="25" :valor-pas="45"></secrionnueva>
+        </div>
+        <div class="col-span-2 row-span-2 col-start-5">
+            <secrionnueva :etapa="props.idetapa"  :fk="22" :name="'pH'" :valor-max="8" :valor-min="7" :valor-pas="10"></secrionnueva>
+        </div>
+    </div>
     <UTabs :items="items" class="w-full">
         <template #item="{ item }">
 
@@ -64,10 +70,10 @@ onBeforeMount(async () => {
                         </section>
                     </div>
                     <div class="col-span-2 row-span-5 col-start-5">
-                        <viewp-h :etapa="item.etapa" :y2="0" :y="60" :fk="20" :name="item.label"/>
+                        <viewp-h :etapa="item.etapa" :y2="0" :y="15" :fk="20" :name="item.label"/>
                     </div>
                     <div class="col-span-4 row-span-4 row-start-2">
-                        <view-area :etapa="item.etapa" :y2="0" :y="60" :fk="20" :name="item.label"/>
+                        <view-area :etapa="item.etapa" :y2="0" :y="15" :fk="20" :name="item.label"/>
                     </div>
                 </div>
             </div>
@@ -79,16 +85,12 @@ onBeforeMount(async () => {
                             </section>
                         </div>
                         <div class="col-span-2 row-span-5 col-start-5">
-                            <viewp-h :etapa="item.etapa" :y2="0" :y="14" :fk="21" :name="item.label"/>
+                            <viewp-h :etapa="item.etapa" :y2="0" :y="36" :fk="21" :name="item.label"/>
                         </div>
                         <div class="col-span-4 row-span-4 row-start-2">
-                            <view-area :etapa="item.etapa" :y2="0" :y="14" :fk="21" :name="item.label"/>
+                            <view-area :etapa="item.etapa" :y2="0" :y="36" :fk="21" :name="item.label"/>
                         </div>
                     </div>
-
-
-
-
             </div>
             <div v-else-if="item.key === 10" class="space-y-3">
                 <div class="grid grid-cols-6 grid-rows-5 gap-4">
@@ -98,18 +100,16 @@ onBeforeMount(async () => {
                         </section>
                     </div>
                     <div class="col-span-2 row-span-5 col-start-5">
-                        <viewp-h :etapa="item.etapa" :y2="0" :y="100" :fk="22" :name="item.label"/>
+                        <viewp-h :etapa="item.etapa" :y2="0" :y="9" :fk="22" :name="item.label"/>
                     </div>
                     <div class="col-span-4 row-span-4 row-start-2">
-                        <view-area :etapa="item.etapa" :y2="0" :y="100" :fk="22" :name="item.label"/>
+                        <view-area :etapa="item.etapa" :y2="0" :y="9" :fk="22" :name="item.label"/>
                     </div>
                 </div>
             </div>
 
         </template>
     </UTabs>
-
-
 </template>
 
 <style scoped>
