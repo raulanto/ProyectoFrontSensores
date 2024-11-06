@@ -220,11 +220,11 @@ function getColor(value) {
   <UTabs :items="tasbItems" class="section-card">
     <template #item="{ item }">
       <div v-if="item.key === 'equipo'" class="space-y-3">
-        <tablaseccion-equipo :fkequipo="etapa.fkequipo"/>
+        <tablaseccion-equipo :fkequipo="8"/>
       </div>
       <div v-else-if="item.key === 'grafico'" class="space-y-3">
 
-        <tab-sensores :fkseccionEquipo="1" :idetapa="id"/>
+        <tab-sensores :fkseccionEquipo="1" :idetapa="15"/>
       </div>
       <div v-else-if="item.key === 'lecturas'" class="space-y-3">
         <tabla-lectura :etapa="id"></tabla-lectura>

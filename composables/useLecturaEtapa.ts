@@ -44,8 +44,24 @@ export function useLecturaEtapa() {
         return data.value
     }
 
+
+    async function fetchLecturaEquipolast(etapa:number,fkESeccionEquipoSensor:number) {
+        const { data, error } =
+            await useFetch(`${apiUrl}/api/v1/lectura/last/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
+                headers: {
+                    Authorization: `Token ${authStore.token}`
+                }
+            })
+        if (error.value) {
+            throw new Error('Error al consumir la API')
+        }
+
+        return data.value
+    }
+
     return {
         fetchLectura,
+        fetchLecturaEquipolast,
         fetchLecturaEquipo
     }
 }

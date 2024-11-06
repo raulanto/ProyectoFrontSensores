@@ -58,58 +58,7 @@ onBeforeMount(async () => {
             <secrionnueva :etapa="props.idetapa"  :fk="22" :name="'pH'" :valor-max="8" :valor-min="7" :valor-pas="10"></secrionnueva>
         </div>
     </div>
-    <UTabs :items="items" class="w-full">
-        <template #item="{ item }">
 
-
-            <div v-if="item.key === 4" class="space-y-3">
-                <div class="grid grid-cols-6 grid-rows-5 gap-4">
-                    <div class="col-span-4">
-                        <section class="section-card">
-                            Sensor de {{item.label}}
-                        </section>
-                    </div>
-                    <div class="col-span-2 row-span-5 col-start-5">
-                        <viewp-h :etapa="item.etapa" :y2="0" :y="15" :fk="20" :name="item.label"/>
-                    </div>
-                    <div class="col-span-4 row-span-4 row-start-2">
-                        <view-area :etapa="item.etapa" :y2="0" :y="15" :fk="20" :name="item.label"/>
-                    </div>
-                </div>
-            </div>
-            <div v-else-if="item.key === 5" class="space-y-3">
-                    <div class="grid grid-cols-6 grid-rows-5 gap-4">
-                        <div class="col-span-4">
-                            <section class="section-card">
-                                Sensor de {{item.label}}
-                            </section>
-                        </div>
-                        <div class="col-span-2 row-span-5 col-start-5">
-                            <viewp-h :etapa="item.etapa" :y2="0" :y="36" :fk="21" :name="item.label"/>
-                        </div>
-                        <div class="col-span-4 row-span-4 row-start-2">
-                            <view-area :etapa="item.etapa" :y2="0" :y="36" :fk="21" :name="item.label"/>
-                        </div>
-                    </div>
-            </div>
-            <div v-else-if="item.key === 10" class="space-y-3">
-                <div class="grid grid-cols-6 grid-rows-5 gap-4">
-                    <div class="col-span-4">
-                        <section class="section-card">
-                            Sensor de {{item.label}}
-                        </section>
-                    </div>
-                    <div class="col-span-2 row-span-5 col-start-5">
-                        <viewp-h :etapa="item.etapa" :y2="0" :y="9" :fk="22" :name="item.label"/>
-                    </div>
-                    <div class="col-span-4 row-span-4 row-start-2">
-                        <view-area :etapa="item.etapa" :y2="0" :y="9" :fk="22" :name="item.label"/>
-                    </div>
-                </div>
-            </div>
-
-        </template>
-    </UTabs>
 </template>
 
 <style scoped>

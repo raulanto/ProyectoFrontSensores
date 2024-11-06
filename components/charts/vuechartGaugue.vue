@@ -3,13 +3,13 @@ import {computed, defineProps, ref, watch} from "vue";
 import { VueUiGauge } from "vue-data-ui";
 import "vue-data-ui/style.css"
 
+
 const props = defineProps({
     name: {
         type: String,
         required: true
     },
     valoresArray: {
-        type: Array,
         required: true
     },
     valorMax: {
@@ -25,7 +25,7 @@ const props = defineProps({
         required: true
     },
 });
-const currentValue = ref(""); // Define a reactive value for the thermometer
+const currentValue = ref(0); 
 
 const config = computed(() => {
     return {
@@ -135,15 +135,14 @@ const dataset = computed(() => {
     }
 })
 watch(() => props.valoresArray, (newVal) => {
-    if (newVal && newVal.length > 0) {
-        currentValue.value = newVal[newVal.length - 1]; // Set the last fetched value
-    }
-}, { immediate: true });
+    currentValue.value = newVal;
+    console.log(currentValue.value)
 
+}, { immediate: true });
 </script>
 
 <template>
-    <div style="width:500px">
+    <div style="width:400px">
         <ClientOnly>
             <VueUiGauge :config="config" :dataset="dataset" />
         </ClientOnly>

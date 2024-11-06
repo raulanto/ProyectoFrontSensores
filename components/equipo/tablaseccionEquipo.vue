@@ -27,7 +27,7 @@ const fetchData = async () => {
 
 // Fetch data when component is mounted
 onMounted(fetchData)
-
+onBeforeMount(fetchData)
 // Watch for changes in fkequipo prop and refetch data
 watch(() => props.fkequipo, () => {
     fetchData()
