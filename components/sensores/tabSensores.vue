@@ -47,7 +47,7 @@ onBeforeMount(async () => {
 
 <template>
 <!--    <secrionnueva :etapa="props.idetapa"  :fk="20" :name="'Oxigeno'"></secrionnueva>-->
-    <div class="grid grid-cols-6 grid-rows-2 gap-4">
+    <div class="grid grid-cols-6 grid-rows-2 ">
         <div class="col-span-2 row-span-2">
             <secrionnueva :etapa="props.idetapa"  :fk="20" :name="'Oxigeno'" :valor-max="15" :valor-min="10" :valor-pas="20"></secrionnueva>
         </div>

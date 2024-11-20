@@ -170,61 +170,61 @@ function getColor(value) {
     <UBreadcrumb :links="links"/>
   </section>
 
-  <div class="grid grid-cols-5 grid-rows-1 gap-4">
-    <div class="col-span-2 section-card">
-      <div class="flex flex-col">
-        <div>Nombre de la etapa: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.nombre }}</span></div>
-        <div>
-          <UBadge
-              :color="getColor(etapaPrincipaldata.activo)"
-              :label="getLabel(etapaPrincipaldata.activo)"
-              class="px-2"
-              size="xl"
-              variant="subtle"
-          />
-        </div>
-      </div>
-    </div>
+<!--  <div class="grid grid-cols-5 grid-rows-1 gap-4">-->
+<!--    <div class="col-span-2 section-card">-->
+<!--      <div class="flex flex-col">-->
+<!--        <div>Nombre de la etapa: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.nombre }}</span></div>-->
+<!--        <div>-->
+<!--          <UBadge-->
+<!--              :color="getColor(etapaPrincipaldata.activo)"-->
+<!--              :label="getLabel(etapaPrincipaldata.activo)"-->
+<!--              class="px-2"-->
+<!--              size="xl"-->
+<!--              variant="subtle"-->
+<!--          />-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="col-start-3 section-card">
-      <div class="flex flex-col">
-        <div>Fecha: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.created_at }}</span></div>
-        <span class="font-bold text-primary-500">{{ (etapaPrincipaldata.horacreacion) }}</span>
-      </div>
-    </div>
+<!--    <div class="col-start-3 section-card">-->
+<!--      <div class="flex flex-col">-->
+<!--        <div>Fecha: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.created_at }}</span></div>-->
+<!--        <span class="font-bold text-primary-500">{{ (etapaPrincipaldata.horacreacion) }}</span>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="col-start-4 section-card justify-items-center items-center flex">
-      <div>Duración: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.duracion }}</span></div>
-    </div>
+<!--    <div class="col-start-4 section-card justify-items-center items-center flex">-->
+<!--      <div>Duración: <span class="font-bold text-primary-500">{{ etapaPrincipaldata.duracion }}</span></div>-->
+<!--    </div>-->
 
-    <div class="col-start-5 section-card flex">
-      <UButton
-          :color="etapaPrincipaldata.activo === 1 ? 'rose' : 'green'"
-          :disabled="etapaPrincipaldata.activo === 3"
-          block
-          variant="solid"
-          @click="toggleActiveState"
-      >
-        {{ etapaPrincipaldata.activo === 1 ? 'Desactivar' : 'Activar' }}
-      </UButton>
-    </div>
-  </div>
+<!--    <div class="col-start-5 section-card flex">-->
+<!--      <UButton-->
+<!--          :color="etapaPrincipaldata.activo === 1 ? 'rose' : 'green'"-->
+<!--          :disabled="etapaPrincipaldata.activo === 3"-->
+<!--          block-->
+<!--          variant="solid"-->
+<!--          @click="toggleActiveState"-->
+<!--      >-->
+<!--        {{ etapaPrincipaldata.activo === 1 ? 'Desactivar' : 'Activar' }}-->
+<!--      </UButton>-->
+<!--    </div>-->
+<!--  </div>-->
 
-  <div class="grid grid-cols-5 grid-rows-1 gap-4">
-    <div class="col-span-5 section-card">
-      <!-- Barra de progreso -->
-      <UProgress :value="progressValue" indicator/>
-    </div>
-  </div>
+<!--  <div class="grid grid-cols-5 grid-rows-1 gap-4">-->
+<!--    <div class="col-span-5 section-card">-->
+<!--      &lt;!&ndash; Barra de progreso &ndash;&gt;-->
+<!--      <UProgress :value="progressValue" indicator/>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <UTabs :items="tasbItems" class="section-card">
     <template #item="{ item }">
       <div v-if="item.key === 'equipo'" class="space-y-3">
-        <tablaseccion-equipo :fkequipo="8"/>
+        <tablaseccion-equipo :fkequipo="10"/>
       </div>
       <div v-else-if="item.key === 'grafico'" class="space-y-3">
 
-        <tab-sensores :fkseccionEquipo="1" :idetapa="15"/>
+        <tab-sensores :fkseccionEquipo="1" :idetapa="17"/>
       </div>
       <div v-else-if="item.key === 'lecturas'" class="space-y-3">
         <tabla-lectura :etapa="id"></tabla-lectura>

@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiKey:'http://127.0.0.1:8000'
+            apiKey:'http://127.0.0.1:8000/'
         }
     }
 

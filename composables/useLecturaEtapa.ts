@@ -11,12 +11,11 @@ interface DatosLectura {
 }
 
 
-
 export function useLecturaEtapa() {
     const authStore = useAuthStore()
     // @ts-ignore
     const iduser=authStore.user.id
-    const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
+    const { public: { apiKey: apiUrl } } = useRuntimeConfig() // api curl url
 
     async function fetchLectura(etapa:number) {
         const { data, error } = await useFetch(`${apiUrl}/api/v1/lectura/?fkEtapa=${etapa}`, {
