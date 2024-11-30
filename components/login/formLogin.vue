@@ -33,7 +33,7 @@ async function onSubmit (event: FormSubmitEvent<Schema>) {
     event.preventDefault()
 
     try {
-        const { data, error } = await useFetch(`${apiUrl}/api-token-auth/`, {
+        const { data, error } = await useFetch('/api/login', {
             method: 'POST',
             body: {
                 username: state.username,

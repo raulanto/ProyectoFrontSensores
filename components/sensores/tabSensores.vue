@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import {useseccionSensor} from '~/composables/useseccionSensor'
 import {onMounted, ref} from "vue";
-import ViewArea from "~/components/charts/viewArea.vue";
-import ViewpH from "~/components/charts/viewpH.vue";
-import SectionchartGaugue from "~/components/charts/sectionchartGaugue.vue";
-
 const props = defineProps({
     fkseccionEquipo: {
         type: Number,
@@ -33,20 +29,11 @@ onMounted(async () => {
     }
 })
 
-onBeforeMount(async () => {
-    try {
-        const data = await fetchseccionSensor(22)
-        seccionEquipoSensor.value = data.results
-    } catch (e) {
-        console.error('Error al obtener los datos:', e.message)
-    }
-})
-
 
 </script>
 
 <template>
-<!--    <secrionnueva :etapa="props.idetapa"  :fk="20" :name="'Oxigeno'"></secrionnueva>-->
+
     <div class="grid grid-cols-6 grid-rows-2 ">
         <div class="col-span-2 row-span-2">
             <secrionnueva :etapa="props.idetapa"  :fk="20" :name="'Oxigeno'" :valor-max="15" :valor-min="10" :valor-pas="20"></secrionnueva>

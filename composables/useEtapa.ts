@@ -28,7 +28,7 @@ export function useEtapa() {
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchEtapa(fkProceso: number) {
-        const {data, error} = await useFetch(`${apiUrl}/api/v1/etapa/?fkProceso=${fkProceso}`, {
+        const {data, error} = await useFetch(`/api/etapa/?fkProceso=${fkProceso}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -43,7 +43,7 @@ export function useEtapa() {
         fkProceso: FkProceso;
         etapaPrincipal: { duracion: string; id: number; nombre: string; activo: boolean }
     }> {
-        const {data, error} = await useFetch(`${apiUrl}/api/v1/etapa/?id=${id}`, {
+        const {data, error} = await useFetch(`/api/etapa/?id=${id}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`,
             },
@@ -91,7 +91,7 @@ export function useEtapa() {
                 horacreacion:string;
             }
     ) {
-        const {data, error} = await useFetch(`${apiUrl}/api/v1/etapa/registro/`, {
+        const {data, error} = await useFetch(`/api/etapa/registro/`, {
             method: 'POST',
             headers: {
                 Authorization: `Token ${authStore.token}`,
@@ -107,7 +107,7 @@ export function useEtapa() {
         return data.value
     }
     async function putEtapa(proceso: { activo:number },id:number) {
-        const {data, error} = await useFetch(`${apiUrl}/api/v1/etapa/${id}/`, {
+        const {data, error} = await useFetch(`/api/etapa/${id}/`, {
             method: 'PUT',
             headers: {
                 Authorization: `Token ${authStore.token}`,

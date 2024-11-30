@@ -7,7 +7,7 @@ export function useseccionSensor() {
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchseccionSensor(fkseccionEquipo:number) {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/seccionSensor/?fkseccionEquipo=${fkseccionEquipo}`, {
+        const { data, error } = await useFetch(`/api/seccionSensor/?fkseccionEquipo=${fkseccionEquipo}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

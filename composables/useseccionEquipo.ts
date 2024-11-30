@@ -8,7 +8,7 @@ export function useseccionEquipo() {
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchseccionEquipo(fkequipo:number) {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/seccionEquipo/?fkequipo=${fkequipo}`, {
+        const { data, error } = await useFetch(`/api/seccionEquipo/?fkequipo=${fkequipo}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

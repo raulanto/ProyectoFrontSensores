@@ -11,7 +11,7 @@ export function useProceso() {
 
     // Método para obtener procesos (GET)
     async function fetchProceso() {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/proceso/?usuario=${iduser}`, {
+        const { data, error } = await useFetch(`/api/proceso/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -25,7 +25,7 @@ export function useProceso() {
     }
 
     async function fetchProcesoId(id: number) {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/proceso/?usuario=${iduser}&id=${id}`, {
+        const { data, error } = await useFetch(`/api/proceso/?usuario=${iduser}&id=${id}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

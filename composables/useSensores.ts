@@ -9,7 +9,7 @@ export function useSensores() {
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchSensor() {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/sensor/?usuario=${iduser}`, {
+        const { data, error } = await useFetch(`/api/sensor/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

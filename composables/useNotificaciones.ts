@@ -8,7 +8,7 @@ export function useNotificaciones() {
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchNotificacion() {
-        const {data, error} = await useFetch(`${apiUrl}/api/v1/notificacion/?use=${iduser}`, {
+        const {data, error} = await useFetch(`/api/notificacion/?use=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -21,7 +21,7 @@ export function useNotificaciones() {
     }
 
     async function fetchNotificacionRead() {
-        const {data, error} = await useFetch(`${apiUrl}/api/v1/notificacion/?use=${iduser}&is_read=false`, {
+        const {data, error} = await useFetch(`/api/notificacion/?use=${iduser}&is_read=false`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

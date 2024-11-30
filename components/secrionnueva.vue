@@ -61,14 +61,7 @@ async function recargarDatos() {
 
 onMounted(() => {
     recargarDatos(); // Cargar los datos inicialmente
-    const intervalId = setInterval(() => {
-        recargarDatos(); // Recargar cada 30 segundos
-    }, 3000);
 
-    // Limpiar intervalo cuando el componente se desmonta
-    onBeforeUnmount(() => {
-        clearInterval(intervalId);
-    });
 });
 
 </script>

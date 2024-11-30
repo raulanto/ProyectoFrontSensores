@@ -8,7 +8,7 @@ export function useProducto(){
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchProducto() {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/producto/?usuario=${iduser}`, {
+        const { data, error } = await useFetch(`/api/producto/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -25,7 +25,7 @@ export function useProducto(){
         const authStore = useAuthStore();  // Assuming you're using a store for authentication
         // @ts-ignore
         // @ts-ignore
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/producto/registro/`, {
+        const { data, error } = await useFetch(`/api/producto/registro/`, {
             method: 'POST',
             headers: {
                 Authorization: `Token ${authStore.token}`,
@@ -53,7 +53,7 @@ export function useProducto(){
         return data.value;
     }
     async function fetchProductoValores(idproducto:number) {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/valoresproducto/?producto=${idproducto}`, {
+        const { data, error } = await useFetch(`/api/valoresproducto/?producto=${idproducto}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

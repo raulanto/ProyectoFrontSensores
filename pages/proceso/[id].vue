@@ -74,16 +74,12 @@ const links = [ {
 
     <section class="section-card">
     <UBreadcrumb :links="links" />
-
         <ul>
             <li v-for="item in rows" :key="item.id">
                 <h1 class="text-xl font-bold">Procesos: {{ item.nombre }}</h1>
             </li>
         </ul>
     </section>
-
-
-
 
     <div class="grid grid-cols-5 grid-rows-2 gap-4">
         <div class="col-span-5 row-span-2 ">

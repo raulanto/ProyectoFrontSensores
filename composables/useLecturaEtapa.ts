@@ -18,7 +18,7 @@ export function useLecturaEtapa() {
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // api curl url
 
     async function fetchLectura(etapa:number) {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/lectura/?fkEtapa=${etapa}`, {
+        const { data, error } = await useFetch(`/api/lectura/?fkEtapa=${etapa}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -31,7 +31,7 @@ export function useLecturaEtapa() {
 
     async function fetchLecturaEquipo(etapa:number,fkESeccionEquipoSensor:number) {
         const { data, error } =
-            await useFetch(`${apiUrl}/api/v1/lectura/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
+            await useFetch(`/api/lectura/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }
@@ -46,7 +46,7 @@ export function useLecturaEtapa() {
 
     async function fetchLecturaEquipolast(etapa:number,fkESeccionEquipoSensor:number) {
         const { data, error } =
-            await useFetch(`${apiUrl}/api/v1/lectura/last/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
+            await useFetch(`/api/lectura/last/?fkEtapa=${etapa}&fkESeccionEquipoSensor=${fkESeccionEquipoSensor}`, {
                 headers: {
                     Authorization: `Token ${authStore.token}`
                 }

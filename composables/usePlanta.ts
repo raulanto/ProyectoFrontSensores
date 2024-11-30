@@ -11,7 +11,7 @@ export function usePlanta() {
     const { public: { apiKey: apiUrl } } = useRuntimeConfig() // Ensure it's called within setup
 
     async function fetchPlantas() {
-        const { data, error } = await useFetch(`${apiUrl}/api/v1/planta/?usuario=${iduser}`, {
+        const { data, error } = await useFetch(`/api/planta/?usuario=${iduser}`, {
             headers: {
                 Authorization: `Token ${authStore.token}`
             }

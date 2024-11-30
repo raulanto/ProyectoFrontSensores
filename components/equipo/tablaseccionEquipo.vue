@@ -27,11 +27,6 @@ const fetchData = async () => {
 
 // Fetch data when component is mounted
 onMounted(fetchData)
-onBeforeMount(fetchData)
-// Watch for changes in fkequipo prop and refetch data
-watch(() => props.fkequipo, () => {
-    fetchData()
-})
 
 const rows = computed(() => {
     return seccionEquipo.value.slice((page.value - 1) * pageCount, page.value * pageCount)
@@ -91,8 +86,6 @@ const todoStatus = [{
     <div class="">
         <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
             <UInput v-model="q" placeholder="Filtrar Equipo" />
-
-
         </div>
 
 
