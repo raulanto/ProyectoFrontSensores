@@ -7,36 +7,21 @@ export default defineEventHandler(
             "results": [
                 {
                     "id": 10,
-                    "nombre": "Planta los 2 hemanos",
+                    "nombre": "Coperativa Trasformando Mecuocan",
                     "codigo_postal": "86560",
-                    "calle": "Felipe carrilo puerto",
+                    "calle": "Carretera federal,Paraiso,bellote(Miguel de la Madrid,8613),Paraiso Tabasco México",
                     "municipio": {
                         "id": 3,
-                        "nombre": "Cardenas",
-                        "estado": {
-                            "id": 3,
-                            "nombre": "Tabasco"
-                        }
-                    },
-                    "descripcion": "Esto es una planta de pescados",
-                    "usuario": 5
-                },
-                {
-                    "id": 11,
-                    "nombre": "Planta 1",
-                    "codigo_postal": "8993",
-                    "calle": "calle c",
-                    "municipio": {
-                        "id": 4,
                         "nombre": "Paraiso",
                         "estado": {
                             "id": 3,
                             "nombre": "Tabasco"
                         }
                     },
-                    "descripcion": "",
-                    "usuario": 4
-                }
+                    "descripcion": "Planta Mecuocan ",
+                    "usuario": 5
+                },
+
             ]
         }
     }
