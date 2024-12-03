@@ -7,7 +7,7 @@ export default defineEventHandler(
             "results": [
                 {
                     "id": 10,
-                    "nombre": "Coperativa Trasformando Mecuocan",
+                    "nombre": "Coperativa Trasformando Mecuuocan",
                     "codigo_postal": "86560",
                     "calle": "Carretera federal,Paraiso,bellote(Miguel de la Madrid,8613),Paraiso Tabasco México",
                     "municipio": {
@@ -18,7 +18,7 @@ export default defineEventHandler(
                             "nombre": "Tabasco"
                         }
                     },
-                    "descripcion": "Planta Mecuocan ",
+                    "descripcion": "Planta Mecuuocan ",
                     "usuario": 5
                 },
 
