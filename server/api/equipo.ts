@@ -10,7 +10,7 @@ export default defineEventHandler(
                     "id": 8,
                     "nombre": "TOTEM 1",
                     "descripcion": "Equipo para depurar ostiones",
-                    "fkplanta_nombre": "Coperatica",
+                    "fkplanta_nombre": "Coperativa",
                     "fkproducto_nombre": "Ostiones",
                     "usuario": 5
                 }
