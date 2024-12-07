@@ -44,11 +44,11 @@ export default defineEventHandler(
                 {
                     "id": 1,
                     "user": 5,
-                    "message": "asdasd",
+                    "message": "Alerta",
                     "notification_type": "info",
                     "created_at": "2024-09-15",
                     "is_read": true,
-                    "tittle": "Esto es un titulo"
+                    "tittle": "El valor de la sonda no es proporcionar los parametros del producto"
                 }
             ]
         }
